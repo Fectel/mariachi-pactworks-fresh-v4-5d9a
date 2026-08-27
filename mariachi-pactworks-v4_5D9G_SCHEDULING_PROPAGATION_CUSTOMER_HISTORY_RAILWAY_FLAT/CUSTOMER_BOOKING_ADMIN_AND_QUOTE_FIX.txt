@@ -1,0 +1,29 @@
+PactWorks v4.5D9C
+
+QUOTE FORM BUG FIX
+- Event type is now visibly labeled.
+- Icon choices remain bilingual.
+- If a customer still submits without selecting one, PactWorks safely records
+  eventType=Other instead of blocking the inquiry with an invisible requirement.
+
+ADMIN UX
+Added a clear Customer Booking card under Public portal connection:
+
+Public booking mode:
+- Quote / Inquiry only (DEFAULT)
+- Quote + Check Availability
+
+Quote / Inquiry only:
+- basic inquiry form visible
+- advanced scheduling hidden
+- no availability promise
+
+Quote + Check Availability:
+- basic quote remains available
+- advanced Schedule & Quotes becomes visible
+
+The old publicAvailabilityEnabled boolean remains synchronized for backward
+compatibility.
+
+No database changes.
+Railway/Docker remains canonical.
