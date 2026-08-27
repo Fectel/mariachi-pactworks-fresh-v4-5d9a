@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Mariachi Hermanos Azteca — PactWorks Relationship Command Center 4.5G.2</title>
+<style>
+:root{
+  --ink:#18181b;--muted:#67636a;--line:#ded8ce;--paper:#fff;--soft:#f5f1ea;
+  --accent:#691628;--accent-dark:#3e0b16;--gold:#ad7b24;--gold-soft:#fff8e7;
+  --ok:#176b43;--warn:#995a00;--bad:#a02222;--blue:#1f5c86;
+  --shadow:0 14px 36px rgba(0,0,0,.10);--radius:18px
+}
+*{box-sizing:border-box}
+html{background:var(--soft)}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--soft);color:var(--ink)}
+button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.shell{min-height:100vh}.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:11px;min-width:250px}.brand-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:grid;place-items:center;color:#fff;font-family:Georgia,serif;font-weight:900;font-size:19px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}.brand strong{display:block}.brand small{display:block;color:var(--muted)}
+.nav{display:flex;gap:6px;flex:1;overflow:auto}.nav button{border:0;background:transparent;padding:9px 12px;border-radius:10px;color:#4b4b50;white-space:nowrap}.nav button.active,.nav button:hover{background:#f0ebe4;color:var(--ink)}
+.top-actions{display:flex;gap:7px;align-items:center}.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 14px;font-weight:800;color:inherit;display:inline-flex;align-items:center;justify-content:center;gap:7px}.btn:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(0,0,0,.07)}.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.btn.gold{background:var(--gold);color:#fff;border-color:var(--gold)}.btn.small{padding:7px 10px;font-size:13px}.btn.ghost{background:transparent}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+main{max-width:1240px;margin:0 auto;padding:26px 20px 72px}.page-title{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:0 0 18px}.page-title h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:32px;letter-spacing:-.4px;color:var(--accent)}.page-title p{margin:5px 0 0;color:var(--muted);max-width:780px;line-height:1.5}
+.hero{position:relative;overflow:hidden;padding:26px 28px;border:1px solid rgba(173,123,36,.45);border-radius:26px;background:linear-gradient(135deg,#fffdf8 0%,#fff7e8 52%,#f4e6c8 100%);box-shadow:0 18px 45px rgba(72,41,12,.08);margin-bottom:18px}.hero:after{content:"✦";position:absolute;right:34px;top:-15px;font-family:Georgia,serif;font-size:140px;color:rgba(173,123,36,.10);transform:rotate(12deg)}.eyebrow{display:block;color:#a7761e;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:900;margin-bottom:7px}.hero h1{position:relative;z-index:1;margin:0 0 7px;font-family:Georgia,"Times New Roman",serif;color:var(--accent);font-size:36px}.hero p{position:relative;z-index:1;margin:0;color:#6b6257;line-height:1.55;max-width:760px}
+.grid{display:grid;gap:16px}.grid.cols-4{grid-template-columns:repeat(4,1fr)}.grid.cols-3{grid-template-columns:repeat(3,1fr)}.grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 24px rgba(0,0,0,.04);padding:18px}.metric strong{display:block;font-size:31px;letter-spacing:-.8px}.metric span{color:var(--muted);font-size:14px}.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}.section-title h2{margin:0;font-size:19px}.section-title p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.notice{padding:13px 14px;border-radius:12px;background:#fff8e8;border:1px solid #ead3a2;color:#674416;font-size:14px;line-height:1.45}.notice.good{background:#edf8f2;border-color:#bddfcb;color:#15543a}.notice.bad{background:#fff0f0;border-color:#e7baba;color:#7a1818}.notice.info{background:#eef6fb;border-color:#c8dce9;color:#24536c}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800;background:#eee;color:#555}.badge.gold{background:#fff1cb;color:#775000}.badge.good{background:#e5f5ec;color:#13603c}.badge.warn{background:#fff0d8;color:#7a4d00}.badge.bad{background:#fff0f0;color:#8a2020}.badge.blue{background:#e7f2fb;color:#235f86}.badge.muted{background:#f0efed;color:#666}
+.queue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.queue-card{overflow:hidden;padding:0}.queue-head{padding:16px 18px;background:linear-gradient(135deg,#fffaf0,#f6ead1);border-bottom:1px solid #eadfc9}.queue-head-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.queue-head h3{margin:0;font-size:17px;color:var(--accent)}.queue-head p{margin:5px 0 0;color:var(--muted);font-size:12px}.queue-list{padding:4px 12px 10px}.queue-person{width:100%;border:0;background:#fff;text-align:left;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:11px;align-items:center;padding:12px 7px;border-bottom:1px solid #eee9e1;border-radius:10px}.queue-person:last-child{border-bottom:0}.queue-person:hover{background:#faf7f1}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#f7e9c7,#e7c97d);color:#6f4e0d;border:1px solid #d8b65e;font-weight:900}.queue-person strong,.person-card strong{display:block}.sub{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35}.score{font-size:12px;font-weight:900;color:#775000;background:#fff5d8;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.searchbar{display:grid;grid-template-columns:minmax(220px,1fr) 190px auto;gap:10px;margin-bottom:14px}.searchbar input,.searchbar select,.auth-card input{width:100%;border:1px solid #c9c3b9;border-radius:11px;background:#fff;padding:11px 12px;outline:none}.searchbar input:focus,.searchbar select:focus,.auth-card input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(173,123,36,.15)}
+.people-list{display:grid;gap:10px}.person-card{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:13px;align-items:center;padding:14px 16px}.person-card .avatar{width:48px;height:48px}.person-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;color:var(--muted);font-size:13px}
+.empty{padding:36px 22px;text-align:center;color:var(--muted)}.empty strong{display:block;color:var(--ink);font-size:18px;margin-bottom:6px}.loading{padding:28px;text-align:center;color:var(--muted)}
+.readiness{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.readiness>div{padding:13px;border:1px solid var(--line);border-radius:14px;background:#fff}.readiness b{font-size:22px;display:block}.readiness span{font-size:12px;color:var(--muted)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:18px;z-index:100}.modal{width:min(980px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;border:1px solid var(--line);box-shadow:var(--shadow)}.modal-head{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:17px 20px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}.modal-head h2{margin:0;font-family:Georgia,serif;color:var(--accent)}.modal-body{padding:20px}.profile-hero{display:grid;grid-template-columns:62px minmax(0,1fr);gap:15px;align-items:center;margin-bottom:16px}.profile-hero .avatar{width:62px;height:62px;font-size:21px}.profile-hero h3{margin:0;font-size:22px}.profile-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.profile-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.timeline{display:grid;gap:10px}.timeline-item{border:1px solid #e5dfd5;border-radius:14px;padding:14px;background:#fffdf9}.timeline-item h4{margin:0 0 5px}.timeline-item p{margin:5px 0;color:#5f5a55;line-height:1.5}.timeline-date{font-size:12px;color:#8a7251;font-weight:800}.mini-list{display:grid;gap:8px}.mini-item{border:1px solid #e7e2d9;border-radius:12px;padding:11px 12px}.mini-item strong{display:block}.mini-item p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.45}.kv{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid #eee}.kv:last-child{border-bottom:0}.kv span{color:var(--muted)}
+
+.evidence-stack{display:grid;gap:10px}.evidence-card{border:1px solid #dfd2bd;border-radius:14px;background:#fffdf8;overflow:hidden}.evidence-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:12px 13px;background:#fbf3e4;border-bottom:1px solid #e9ddca}.evidence-head strong{display:block;color:var(--accent)}.evidence-head small{display:block;margin-top:3px;color:var(--muted);line-height:1.35}.evidence-original{padding:13px}.evidence-original-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#8a6b32;margin-bottom:6px}.evidence-text{white-space:pre-wrap;overflow-wrap:anywhere;border-left:4px solid var(--gold);background:#fff;padding:11px 12px;border-radius:8px;color:#39332d;line-height:1.5;font-size:13px}.evidence-none{padding:10px 12px;border-radius:9px;background:#f3f0eb;color:var(--muted);font-size:12px}.evidence-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.evidence-meta>div{border:1px solid #ebe4da;background:#fff;border-radius:9px;padding:8px}.evidence-meta span,.evidence-meta b{display:block}.evidence-meta span{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#887d70}.evidence-meta b{margin-top:2px;font-size:11px;overflow-wrap:anywhere}.evidence-details{margin-top:10px;border:1px solid #e5ddd1;border-radius:10px;background:#fff}.evidence-details summary{cursor:pointer;padding:9px 11px;font-size:11px;font-weight:900;color:#6a1425}.raw-json{margin:0;border-top:1px solid #eee5d8;background:#221f1f;color:#f6f0e7;padding:11px;max-height:300px;overflow:auto;font:10px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.media-list{display:grid;gap:5px;margin-top:9px}.media-ref{font-size:11px;padding:7px 8px;border-radius:8px;background:#eef6fb;color:#24536c;overflow-wrap:anywhere}.source-warning{margin-top:8px;font-size:11px;color:#8a4d00}.interpretation-note{margin:0 0 10px;padding:9px 11px;border-radius:10px;background:#f6f1e8;color:#6b6258;font-size:11px;line-height:1.45}
+@media(max-width:680px){.evidence-meta{grid-template-columns:1fr}}
+
+.auth-shell{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 15% 15%,rgba(173,123,36,.18),transparent 28%),radial-gradient(circle at 85% 80%,rgba(105,22,40,.16),transparent 30%),var(--soft)}.auth-card{width:min(480px,100%);background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:var(--shadow)}.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}.auth-brand .brand-mark{width:55px;height:55px}.auth-card h1{margin:0 0 6px;font-family:Georgia,serif;color:var(--accent);font-size:30px}.auth-card p{color:var(--muted);line-height:1.5}.field{margin:14px 0}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}.auth-actions{display:flex;gap:8px;margin-top:14px}
+.auth-secondary{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:13px;color:var(--muted);font-size:12px;flex-wrap:wrap}.auth-link{border:0;background:transparent;padding:4px 2px;color:var(--accent);font-weight:800;cursor:pointer}.auth-link:hover{text-decoration:underline}.auth-link:disabled{opacity:.5;cursor:not-allowed}.auth-card .btn:disabled{opacity:.55;cursor:not-allowed}
+.command-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);gap:16px}
+.focus-list{display:grid;gap:10px}.focus-item{display:grid;grid-template-columns:34px 46px minmax(0,1fr) auto;gap:11px;align-items:center;padding:13px;border:1px solid #e7dfd2;border-radius:15px;background:#fff;box-shadow:0 5px 18px rgba(0,0,0,.03)}
+.focus-item:hover{border-color:#d6bb7d;background:#fffdf8}.focus-rank{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#f5ead2;color:#7a5510;font-weight:900}.focus-copy strong{display:block}.focus-reason{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
+.pulse-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.pulse-card{padding:15px;border:1px solid var(--line);border-radius:15px;background:#fff}.pulse-card b{display:block;font-size:25px;letter-spacing:-.5px}.pulse-card span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+.growth-path-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.growth-path{display:flex;flex-direction:column;min-height:190px;padding:16px;border:1px solid #e4ddd2;border-radius:17px;background:#fff;box-shadow:0 7px 20px rgba(0,0,0,.035)}.growth-path:hover{border-color:#cba85f;transform:translateY(-1px)}
+.growth-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#fff5d9;color:#79540d;font-size:18px;margin-bottom:11px}.growth-path h3{margin:0 0 6px;color:var(--accent);font-size:16px}.growth-path p{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.45;flex:1}.growth-path .path-count{font-size:27px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px}
+.command-side{display:grid;gap:12px}.rule-card{background:linear-gradient(145deg,#3f0d17,#70192d);color:#fff;border:0}.rule-card h3{margin:0 0 7px;font-family:Georgia,serif;font-size:21px}.rule-card p{margin:0;color:#f1dfe4;line-height:1.5;font-size:13px}.rule-card b{color:#f1ce77}
+.queue-summary-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.queue-summary{border:1px solid var(--line);border-radius:14px;background:#fff;padding:13px}.queue-summary b{display:block;font-size:21px}.queue-summary span{display:block;color:var(--muted);font-size:11px;margin-top:4px;line-height:1.35}
+.lens-row{display:flex;gap:7px;flex-wrap:wrap}.lens{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:800;color:#555}.lens.active{background:var(--accent);border-color:var(--accent);color:#fff}.lens.locked{opacity:.55;cursor:not-allowed}
+.value-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.value-strip>div{border:1px solid #e7e1d8;background:#fff;border-radius:12px;padding:11px}.value-strip b{display:block;font-size:18px}.value-strip span{font-size:11px;color:var(--muted)}
+.measure-chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.measure-node{position:relative;border:1px solid var(--line);border-radius:15px;background:#fff;padding:15px}.measure-node:not(:last-child):after{content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);z-index:2;color:#ad7b24;font-weight:900}.measure-node b{display:block;font-size:24px}.measure-node span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.action-lock{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.action-lock .btn{opacity:.55}
+@media(max-width:1050px){.pulse-grid{grid-template-columns:repeat(3,1fr)}.growth-path-grid{grid-template-columns:repeat(2,1fr)}.queue-summary-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:780px){.command-grid{grid-template-columns:1fr}.pulse-grid{grid-template-columns:repeat(2,1fr)}.growth-path-grid,.queue-summary-grid,.measure-chain{grid-template-columns:1fr}.measure-node:not(:last-child):after{display:none}.focus-item{grid-template-columns:30px 42px minmax(0,1fr)}.focus-item>.btn{grid-column:3}.value-strip{grid-template-columns:repeat(2,1fr)}}
+
+.statusbar{padding:8px 20px;background:#3f0d17;color:#f7e9ed;font-size:12px;text-align:center}.statusbar b{color:#f3cf78}
+.skeleton{position:relative;overflow:hidden;background:#eee;border-radius:8px;color:transparent!important}.skeleton:after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);animation:shimmer 1.2s infinite}@keyframes shimmer{100%{transform:translateX(100%)}}
+@media(max-width:950px){.grid.cols-4,.grid.cols-3{grid-template-columns:repeat(2,1fr)}.queue-grid{grid-template-columns:1fr}.readiness{grid-template-columns:repeat(3,1fr)}.profile-grid{grid-template-columns:1fr}.brand{min-width:auto}.brand div:last-child{display:none}}
+@media(max-width:680px){.topbar{flex-wrap:wrap;padding:10px 12px}.nav{order:3;width:100%}.top-actions{margin-left:auto}.grid.cols-4,.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}.searchbar{grid-template-columns:1fr}.readiness{grid-template-columns:repeat(2,1fr)}main{padding:18px 12px 52px}.hero{padding:22px 20px}.hero h1{font-size:30px}.page-title{align-items:flex-start;flex-direction:column}.person-card{grid-template-columns:44px minmax(0,1fr)}.person-card>.btn{grid-column:1/-1}.queue-person{grid-template-columns:38px minmax(0,1fr)}.queue-person .score{grid-column:2}.modal-backdrop{padding:0}.modal{width:100%;height:100%;max-height:none;border-radius:0}.readiness>div{padding:11px}}
+</style>
+</head>
+<body>
+<div id="authShell" class="auth-shell">
+  <div class="auth-card">
+    <div class="auth-brand"><div class="brand-mark">P</div><div><strong>Mariachi Hermanos Azteca</strong><small>PactWorks Relationship & Growth OS</small></div></div>
+    <div id="loginPanel">
+      <span class="eyebrow">Owner access</span>
+      <h1 id="authTitle">Sign in to PactWorks</h1>
+      <p id="authIntro">Use your existing PactWorks email and password. Passwordless email remains available as a fallback.</p>
+      <div class="field"><label for="emailInput">Email</label><input id="emailInput" type="email" autocomplete="email" placeholder="owner@example.com"></div>
+      <div class="field"><label for="passwordInput">Password</label><input id="passwordInput" type="password" autocomplete="current-password" placeholder="Your password"></div>
+      <div class="auth-actions"><button id="signInBtn" class="btn primary">Sign in</button></div>
+      <div class="auth-secondary"><button id="forgotPasswordBtn" class="auth-link" type="button">Forgot password?</button><span>•</span><button id="magicLinkBtn" class="auth-link" type="button">Use an email sign-in link</button></div>
+      <div id="authMessage" class="notice info hidden" style="margin-top:14px"></div>
+      <p style="font-size:12px;margin-top:18px">No account is created from this screen. Access still requires PactWorks organization membership and RLS.</p>
+    </div>
+    <div id="resetPanel" class="hidden">
+      <span class="eyebrow">Password recovery</span>
+      <h1>Choose a new password</h1>
+      <p>Your recovery link has been verified. Choose a new password for this PactWorks account.</p>
+      <div class="field"><label for="newPasswordInput">New password</label><input id="newPasswordInput" type="password" autocomplete="new-password"></div>
+      <div class="field"><label for="confirmPasswordInput">Confirm new password</label><input id="confirmPasswordInput" type="password" autocomplete="new-password"></div>
+      <div class="auth-actions"><button id="savePasswordBtn" class="btn primary">Save new password</button></div>
+      <div id="resetMessage" class="notice info hidden" style="margin-top:14px"></div>
+      <div class="auth-secondary"><button id="backToLoginBtn" class="auth-link" type="button">Back to sign in</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="appShell" class="shell hidden">
+  <div class="topbar">
+    <div class="brand"><div class="brand-mark">P</div><div><strong>Mariachi Hermanos Azteca</strong><small>PactWorks • Relationship & Growth OS</small></div></div>
+    <nav class="nav" id="nav">
+      <button data-page="today" class="active">Today</button>
+      <button data-page="relationships">Relationships</button>
+      <button data-page="celebrations">Celebrations</button>
+      <button data-page="opportunities">Opportunities</button>
+      <button data-page="imports">Imports</button>
+      <button data-page="results">Results</button>
+    </nav>
+    <div class="top-actions"><button id="langBtn" class="btn small">ES</button><button id="refreshBtn" class="btn small">↻</button><button id="logoutBtn" class="btn small">Log out</button></div>
+  </div>
+  <div id="statusbar" class="statusbar">PactWorks <b>4.5G</b> • canonical relationship data • direct RLS reads • Relationship Command Center</div>
+  <main id="main"></main>
+</div>
+
+<div id="modalHost"></div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.3/+esm';
+
+const SUPABASE_URL='https://rssklnlnztiktldxmyxl.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_oPrAg8BiNLV9IFH_Yk0WuQ_RbJTGn1A';
+const ORG_ID='0656ec69-f818-4c23-b50a-59853b5f1f23';
+const DEMO=new URLSearchParams(location.search).get('demo')==='1';
+const db=createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{db:{schema:'pactworks'},auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,storageKey:'mha-pactworks-auth-v1'}});
+
+let state={lang:localStorage.getItem('pw45g1_lang')||'en',page:'today',dashboard:null,people:[],allPeople:[],peopleCount:0,peoplePage:0,peopleQuery:'',peopleType:'all',loading:false,core:null};
+const PAGE_SIZE=40;
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+
+const copy={
+ en:{today:'Today',relationships:'Relationships',celebrations:'Celebrations',opportunities:'Opportunities',imports:'Imports',results:'Results',logout:'Log out',todayTitle:'What should I do today?',todayIntro:'A human relationship command center: look at a few people, understand why they matter, and choose the next human step — never a blind marketing blast.',people:'People',history:'History',reviewing:'Worth reviewing',sensitive:'Sensitive history',humanOnly:'Human review only',humanOnlyCopy:'No item on this screen authorizes automatic outreach. Communication permission must be checked separately.',dataReadiness:'Data readiness',dataReadinessCopy:'These are canonical structured records, not guesses.',contacts:'Contact points',dates:'Confirmed special dates',permissions:'Communication preferences',signals:'Opportunity signals',actions:'Growth actions',search:'Search people',allTypes:'All relationship types',open:'Open relationship',showing:'Showing',of:'of',previous:'Previous',next:'Next',noPeople:'No matching people',relationshipsIntro:'Search the canonical People directory, open recovered history, and build lifetime relationship context without collapsing a person into a lead record.',celebrationsTitle:'Dates worth checking',celebrationsIntro:'Historical celebration-like dates that deserve human confirmation. They are not confirmed birthdays or anniversaries.',opportunitiesTitle:'Opportunities are not activated yet',opportunitiesIntro:'Review queues are evidence-backed attention signals. They are deliberately not permanent opportunities and do not trigger outreach.',importsTitle:'Migration / provenance',importsIntro:'The Relationship UI reads the canonical data created by the reviewed migration. Individual profiles retain source provenance.',resultsTitle:'Results will start when actions exist',resultsIntro:'There are no Growth actions or campaign outcomes yet, so PactWorks does not fabricate a Results dashboard.',profile:'Relationship profile',recentHistory:'Relationship history',connections:'Connections / referrals',contactsPermissions:'Contacts & permissions',sourceEvidence:'Source evidence',noHistory:'No historical event was fabricated for this identity-only Person.',noConnections:'No canonical relationship edge recorded.',noContacts:'No canonical phone or email has been saved yet.',noPermissions:'No communication permission is recorded. Do not infer permission.',noDates:'No confirmed special dates are saved.',noProvenance:'No import provenance visible.',exactEventDate:'Exact event date',evidenceDate:'Evidence recorded',readOnly:'Read-only checkpoint',readOnlyCopy:'Relationship updates, photos, booking actions, and outreach are intentionally not writable in 4.5G.2.',unknown:'Unknown',events:'events',lastEvidence:'Last evidence',source:'Source',relationship:'Relationship',temperature:'Temperature',language:'Language',sendCode:'Send sign-in link',verify:'Open PactWorks',codeSent:'Sign-in link sent. Check your email and click the link to return to PactWorks.',accessDenied:'This signed-in account is not a member of this PactWorks organization.',loading:'Loading…'},
+ es:{today:'Hoy',relationships:'Relaciones',celebrations:'Celebraciones',opportunities:'Oportunidades',imports:'Importaciones',results:'Resultados',logout:'Salir',todayTitle:'¿Qué debo hacer hoy?',todayIntro:'Un centro de mando de relaciones humanas: mira a pocas personas, entiende por qué importan y elige el siguiente paso humano — nunca una campaña ciega.',people:'Personas',history:'Historial',reviewing:'Vale la pena revisar',sensitive:'Historial sensible',humanOnly:'Solo revisión humana',humanOnlyCopy:'Nada en esta pantalla autoriza contacto automático. El permiso de comunicación se verifica por separado.',dataReadiness:'Datos disponibles',dataReadinessCopy:'Estos son registros canónicos estructurados, no suposiciones.',contacts:'Puntos de contacto',dates:'Fechas especiales confirmadas',permissions:'Preferencias de comunicación',signals:'Señales de oportunidad',actions:'Acciones de crecimiento',search:'Buscar personas',allTypes:'Todos los tipos de relación',open:'Abrir relación',showing:'Mostrando',of:'de',previous:'Anterior',next:'Siguiente',noPeople:'No hay personas que coincidan',relationshipsIntro:'Busca el directorio canónico de Personas, abre el historial recuperado y construye contexto de relación de por vida sin reducir a una persona a un lead.',celebrationsTitle:'Fechas que vale la pena revisar',celebrationsIntro:'Fechas históricas parecidas a celebraciones que requieren confirmación humana. No son cumpleaños ni aniversarios confirmados.',opportunitiesTitle:'Las oportunidades aún no están activadas',opportunitiesIntro:'Las colas de revisión son señales de atención basadas en evidencia. No son oportunidades permanentes y no activan contacto.',importsTitle:'Migración / procedencia',importsIntro:'La interfaz de Relaciones lee los datos canónicos creados por la migración revisada. Cada perfil conserva su procedencia.',resultsTitle:'Resultados comenzará cuando existan acciones',resultsIntro:'Todavía no hay acciones de Growth ni resultados de campañas, así que PactWorks no inventa un tablero de resultados.',profile:'Perfil de relación',recentHistory:'Historial de relación',connections:'Conexiones / referidos',contactsPermissions:'Contactos y permisos',sourceEvidence:'Evidencia de origen',noHistory:'No se fabricó ningún evento histórico para esta Persona de solo identidad.',noConnections:'No hay conexión canónica registrada.',noContacts:'Aún no se ha guardado teléfono o correo canónico.',noPermissions:'No hay permiso de comunicación registrado. No se debe inferir.',noDates:'No hay fechas especiales confirmadas.',noProvenance:'No hay procedencia de importación visible.',exactEventDate:'Fecha exacta del evento',evidenceDate:'Evidencia registrada',readOnly:'Checkpoint de solo lectura',readOnlyCopy:'Actualizaciones, fotos, reservas y contacto quedan intencionalmente fuera de escritura en 4.5G.2.',unknown:'Desconocido',events:'eventos',lastEvidence:'Última evidencia',source:'Origen',relationship:'Relación',temperature:'Temperatura',language:'Idioma',sendCode:'Enviar enlace de acceso',verify:'Abrir PactWorks',codeSent:'Enlace enviado. Revisa tu correo y haz clic en el enlace para volver a PactWorks.',accessDenied:'Esta cuenta no pertenece a esta organización de PactWorks.',loading:'Cargando…'}
+};
+const t=k=>copy[state.lang][k]||copy.en[k]||k;
+const typeLabel=v=>({
+ 'repeat-client':state.lang==='es'?'Cliente recurrente':'Repeat client',
+ 'past-client':state.lang==='es'?'Cliente anterior':'Past client',
+ 'referred-lead':state.lang==='es'?'Referido':'Referred lead',
+ 'inquiry-only':state.lang==='es'?'Solo consulta':'Inquiry only',
+ 'partner-vendor':state.lang==='es'?'Socio / proveedor':'Partner / vendor',
+ other:state.lang==='es'?'Otro':'Other'
+}[v]||v||t('unknown'));
+const queueLabel=k=>({
+ 'worth-reviewing':state.lang==='es'?'Vale la pena revisar':'Worth reviewing',
+ 'past-repeat-relationships':state.lang==='es'?'Relaciones anteriores / recurrentes':'Past / repeat relationships',
+ 'referral-connections':state.lang==='es'?'Conexiones por referidos':'Referral connections',
+ 'dates-worth-checking':state.lang==='es'?'Fechas que vale la pena revisar':'Dates worth checking',
+ 'sensitive-human-judgment':state.lang==='es'?'Sensible — criterio humano':'Sensitive — human judgment only'
+}[k]||k);
+function initials(name=''){return name.trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase()||'P'}
+function fmtDate(v){if(!v)return '—';try{return new Intl.DateTimeFormat(state.lang==='es'?'es-US':'en-US',{year:'numeric',month:'short',day:'numeric'}).format(new Date(v))}catch{return String(v)}}
+function fmtDateOnly(v){if(!v)return '—';try{return new Intl.DateTimeFormat(state.lang==='es'?'es-US':'en-US',{year:'numeric',month:'short',day:'numeric'}).format(new Date(v+'T12:00:00'))}catch{return String(v)}}
+function setAuthMessage(msg,bad=false){const el=$('#authMessage');el.textContent=msg;el.className='notice '+(bad?'bad':'info');el.classList.remove('hidden')}
+
+const demoDashboard={contract_version:'relationship-dashboard-read-v1',generated_at:new Date().toISOString(),relationship_metrics:{people_total:691,people_with_history:688,identity_only_people:3,relationship_events_total:692,people_with_relationship_edges:4,contact_points_total:0,special_dates_total:0,communication_preferences_total:0,opportunity_signals_total:0,growth_actions_total:0},intelligence_metrics:{high_review:6,established_review:5,context_review:2,historical_low_review:678,sensitive_history_people:25,lapsed_review_candidates:6,celebration_date_review_candidates:7,relationship_edge_review_candidates:4,automatic_outreach_authorized:0},queue_metrics:{queue_memberships:55,distinct_people_in_any_queue:43,automatic_outreach_authorized:0},safety:{human_review_required_for_all_queue_items:true,automatic_outreach_authorized:false,communication_permission_must_be_checked_separately:true,historical_dates_are_not_confirmed_special_dates:true,sensitive_history_requires_human_judgment:true},queues:[
+ {queue_key:'worth-reviewing',person_count:13,sensitive_overlap_count:1,top_items:[demoItem('demo-maria','Maria Demo','repeat-client',50,false),demoItem('demo-carlos','Carlos Demo','past-client',40,false),demoItem('demo-cathy','Cathy Demo','inquiry-only',25,true)]},
+ {queue_key:'past-repeat-relationships',person_count:6,sensitive_overlap_count:0,top_items:[demoItem('demo-maria','Maria Demo','repeat-client',50,false),demoItem('demo-carlos','Carlos Demo','past-client',40,false)]},
+ {queue_key:'referral-connections',person_count:4,sensitive_overlap_count:0,top_items:[demoItem('demo-ana','Ana Demo','referred-lead',45,false)]},
+ {queue_key:'dates-worth-checking',person_count:7,sensitive_overlap_count:1,top_items:[{...demoItem('demo-lucia','Lucía Demo','inquiry-only',15,false),historical_date_for_review:'2021-05-17',historical_date_context:'Birthday'}]},
+ {queue_key:'sensitive-human-judgment',person_count:25,sensitive_overlap_count:25,top_items:[demoItem('demo-cathy','Cathy Demo','inquiry-only',25,true)]}
+]};
+function demoItem(id,name,relationship_type,score,sensitive){return {person_id:id,display_name:name,relationship_type,lead_temperature:'cold',vip:false,relationship_event_count:1,last_relationship_event_at:'2021-05-17T21:32:03Z',days_since_last_relationship_event:1900,recency_band:'historical-two-years-plus',history_depth_band:'single-history',relationship_edge_count:relationship_type==='referred-lead'?1:0,attention_review_score:score,attention_review_tier:score>=45?'high-review':score>=30?'established-review':score>=20?'context-review':'historical-low-review',attention_reason_codes:[relationship_type],has_sensitive_history:sensitive,communication_safety_gate:sensitive?'sensitive-history-human-review':'communication-permission-unknown',automatic_outreach_authorized:false,human_review_required:true,review_safety_state:'human-review-required'}}
+const demoPeople=Array.from({length:73},(_,i)=>({person_id:'demo-'+i,display_name:['María','José','Ana','Carlos','Lucía','Sofía'][i%6]+' Demo '+(i+1),relationship_type:i<2?'repeat-client':i<6?'past-client':i<10?'referred-lead':'inquiry-only',lead_temperature:i<2?'repeat':'cold',preferred_language:i%3===0?'spanish':i%3===1?'english':'bilingual',vip:false,relationship_event_count:i%17===0?0:1,last_relationship_event_at:i%17===0?null:'2021-05-17T21:32:03Z',has_import_provenance:true,import_source_record_count:1,contact_point_count:0,special_date_count:0,outgoing_relationship_edge_count:i>=6&&i<10?1:0,incoming_relationship_edge_count:0}));
+
+let recoveryMode=false;
+function clearAuthNotices(){for(const id of ['authMessage','resetMessage']){const el=$('#'+id);if(el){el.textContent='';el.classList.add('hidden')}}}
+function showAuth(){recoveryMode=false;$('#appShell').classList.add('hidden');$('#authShell').classList.remove('hidden');$('#loginPanel').classList.remove('hidden');$('#resetPanel').classList.add('hidden')}
+function showPasswordRecovery(){recoveryMode=true;$('#appShell').classList.add('hidden');$('#authShell').classList.remove('hidden');$('#loginPanel').classList.add('hidden');$('#resetPanel').classList.remove('hidden');clearAuthNotices()}
+function friendlyAuthError(e){const msg=(e?.message||String(e)||'Authentication failed.').trim();const low=msg.toLowerCase();if(low.includes('same password')||low.includes('different from the old')||low.includes('different from old'))return 'Choose a new password that is different from your current password.';if(low.includes('invalid login credentials'))return 'Email or password is incorrect.';if(low.includes('email rate limit exceeded')||low.includes('rate limit'))return 'Email send limit reached. Wait for the Supabase cooldown before requesting another email.';return msg}
+async function init(){
+  applyStaticTranslations();
+  if(DEMO){$('#authShell').classList.add('hidden');$('#appShell').classList.remove('hidden');state.dashboard=demoDashboard;await loadPeople();render();return}
+  db.auth.onAuthStateChange(async(event,session)=>{if(event==='PASSWORD_RECOVERY'){showPasswordRecovery();return}if(session&&event==='SIGNED_IN'&&!recoveryMode)await enterApp();if(event==='SIGNED_OUT')showAuth()});
+  const recoveryInUrl=location.hash.includes('type=recovery')||new URLSearchParams(location.search).get('type')==='recovery';
+  const {data:{session}}=await db.auth.getSession();
+  if(recoveryInUrl&&session){showPasswordRecovery()}else if(session){await enterApp()}else showAuth();
+}
+async function enterApp(){$('#authShell').classList.add('hidden');$('#appShell').classList.remove('hidden');await refreshAll()}
+async function refreshAll(){
+ state.loading=true;render();
+ try{
+   await loadDashboard();
+   if(!state.dashboard){await db.auth.signOut();showAuth();setAuthMessage(t('accessDenied'),true);return}
+   await loadPeople();
+ }catch(e){showFatal(e)}
+ finally{state.loading=false;render()}
+}
+async function fetchRows(table,columns,filterFn){
+ let q=db.from(table).select(columns);
+ if(filterFn)q=filterFn(q);
+ const {data,error}=await q;
+ if(error)throw error;
+ return data||[];
+}
+function byPerson(rows,key='person_id'){
+ const m=new Map();
+ for(const r of rows){const id=r[key];if(!id)continue;if(!m.has(id))m.set(id,[]);m.get(id).push(r)}
+ return m;
+}
+function countByPerson(rows,key='person_id'){
+ const m=new Map();
+ for(const r of rows){const id=r[key];if(!id)continue;m.set(id,(m.get(id)||0)+1)}
+ return m;
+}
+function businessToday(zone){
+ try{
+   const parts=new Intl.DateTimeFormat('en-CA',{timeZone:zone||'America/Phoenix',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+   const g=t=>parts.find(p=>p.type===t)?.value;
+   return new Date(`${g('year')}-${g('month')}-${g('day')}T12:00:00Z`);
+ }catch{return new Date()}
+}
+function daysBetweenEvent(iso,zone){
+ if(!iso)return null;
+ const now=businessToday(zone),d=new Date(iso);
+ return Math.floor((now-new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),12)))/86400000);
+}
+function buildLocalReadModel(core){
+ const {org,basePeople,events,edges,contacts,specialDates,prefs,bookingRequests,reservations,ledgerEntries,opportunities,growthActions,provenance}=core;
+ const eventMap=byPerson(events), contactCount=countByPerson(contacts), specialCount=countByPerson(specialDates), prefCount=countByPerson(prefs), provCount=countByPerson(provenance,'canonical_id');
+ const oppCount=countByPerson(opportunities), actionCount=countByPerson(growthActions);
+ const outCount=new Map(),inCount=new Map();
+ for(const e of edges){
+   if(e.source_person_id)outCount.set(e.source_person_id,(outCount.get(e.source_person_id)||0)+1);
+   if(e.related_person_id)inCount.set(e.related_person_id,(inCount.get(e.related_person_id)||0)+1);
+ }
+ const reservationByBooking=new Map(), ledgerByBooking=new Map();
+ for(const r of reservations){if(r.booking_request_id){if(!reservationByBooking.has(r.booking_request_id))reservationByBooking.set(r.booking_request_id,[]);reservationByBooking.get(r.booking_request_id).push(r)}}
+ for(const l of ledgerEntries){if(l.booking_request_id){if(!ledgerByBooking.has(l.booking_request_id))ledgerByBooking.set(l.booking_request_id,[]);ledgerByBooking.get(l.booking_request_id).push(l)}}
+ const bookingsByPerson=byPerson(bookingRequests);
+ const celebrationTypes=new Set(['Birthday','Wedding','Quinceañera','Quinceañera / Sweet 16','Anniversary / Vow Renewal','Proposal / Engagement']);
+ const allPeople=basePeople.filter(p=>!p.archived_at).map(p=>{
+   const pe=(eventMap.get(p.id)||[]).slice().sort((a,b)=>new Date(a.occurred_at)-new Date(b.occurred_at));
+   const last=pe.length?pe[pe.length-1]:null;
+   const exact=pe.filter(e=>e.date_precision==='day'&&e.event_date);
+   const celebrationExact=exact.filter(e=>celebrationTypes.has(e.event_type));
+   const sensitive=pe.filter(e=>e.event_type==='Funeral / Memorial');
+   const bks=bookingsByPerson.get(p.id)||[];
+   let reservationCount=0,completedCount=0,ledgerCount=0,ledgerNet=0;
+   for(const b of bks){
+     const rs=reservationByBooking.get(b.id)||[]; reservationCount+=rs.length; completedCount+=rs.filter(r=>r.status==='completed').length;
+     const ls=ledgerByBooking.get(b.id)||[]; ledgerCount+=ls.length; ledgerNet+=ls.reduce((s,x)=>s+Number(x.amount_cents||0),0);
+   }
+   return {
+     organization_id:p.organization_id,person_id:p.id,display_name:p.display_name,given_name:p.given_name,family_name:p.family_name,preferred_language:p.preferred_language,
+     relationship_type:p.relationship_type,lead_temperature:p.lead_temperature,vip:!!p.vip,archived_at:p.archived_at,created_at:p.created_at,updated_at:p.updated_at,
+     relationship_event_count:pe.length,first_relationship_event_at:pe[0]?.occurred_at||null,last_relationship_event_at:last?.occurred_at||null,
+     exact_date_event_count:exact.length,latest_event_type:last?.event_type||null,latest_event_title:last?.title||null,latest_event_date:last?.event_date||null,
+     latest_event_date_precision:last?.date_precision||null,latest_event_source_type:last?.source_type||null,
+     outgoing_relationship_edge_count:outCount.get(p.id)||0,incoming_relationship_edge_count:inCount.get(p.id)||0,
+     contact_point_count:contactCount.get(p.id)||0,special_date_count:specialCount.get(p.id)||0,communication_preference_count:prefCount.get(p.id)||0,
+     canonical_booking_request_count:bks.length,canonical_reservation_count:reservationCount,canonical_completed_reservation_count:completedCount,
+     canonical_ledger_entry_count:ledgerCount,canonical_ledger_net_cents:ledgerNet,canonical_commercial_history_available:bks.length>0||ledgerCount>0,
+     import_source_record_count:provCount.get(p.id)||0,import_batch_count:0,has_import_provenance:(provCount.get(p.id)||0)>0,
+     opportunity_signal_count:oppCount.get(p.id)||0,open_opportunity_signal_count:(opportunities.filter(o=>o.person_id===p.id&&o.status==='open')).length,
+     growth_action_count:actionCount.get(p.id)||0,planned_growth_action_count:(growthActions.filter(a=>a.person_id===p.id&&a.status==='planned')).length,
+     _events:pe,_sensitive:sensitive,_celebrationExact:celebrationExact
+   };
+ });
+ const intelligence=allPeople.map(p=>{
+   const days=daysBetweenEvent(p.last_relationship_event_at,org?.business_timezone);
+   const edgeCount=p.outgoing_relationship_edge_count+p.incoming_relationship_edge_count;
+   const rt={ 'repeat-client':40,'past-client':30,'referred-lead':20,'partner-vendor':15,'inquiry-only':5}[p.relationship_type]||0;
+   const hd=Math.min(p.relationship_event_count,3)*10, ep=edgeCount>0?15:0, vp=p.vip?10:0;
+   const rp=days==null?0:days<=90?20:days<=365?10:days<=730?5:0;
+   const score=rt+hd+ep+vp+rp;
+   const reasons=[];
+   if(p.relationship_type==='repeat-client')reasons.push('repeat-client');
+   if(p.relationship_type==='past-client')reasons.push('past-client');
+   if(p.relationship_type==='referred-lead')reasons.push('referred-lead');
+   if(edgeCount>0)reasons.push('relationship-edge');
+   if(p.relationship_event_count>=2)reasons.push('multiple-historical-events');
+   if(p.exact_date_event_count>0)reasons.push('exact-date-history');
+   if(p._celebrationExact.length>0)reasons.push('celebration-date-human-review');
+   if(p._sensitive.length>0)reasons.push('sensitive-history-human-review');
+   if(['past-client','repeat-client'].includes(p.relationship_type)&&days!=null&&days>365)reasons.push('lapsed-established-relationship-review');
+   if(p.vip)reasons.push('vip');
+   if(p.relationship_event_count===0&&p.has_import_provenance)reasons.push('identity-only-imported');
+   const tier=score>=45?'high-review':score>=30?'established-review':score>=20?'context-review':'historical-low-review';
+   return {...p,days_since_last_relationship_event:days,recency_band:p.relationship_event_count===0?'identity-only':days<=90?'active-90d':days<=365?'within-year':days<=730?'one-to-two-years':'historical-two-years-plus',
+     history_depth_band:p.relationship_event_count===0?'identity-only':p.relationship_event_count===1?'single-history':p.relationship_event_count===2?'repeat-history':'deep-history',
+     relationship_edge_count:edgeCount,historical_event_types:[...new Set(p._events.map(e=>e.event_type))].sort(),has_sensitive_history:p._sensitive.length>0,sensitive_event_count:p._sensitive.length,
+     exact_date_history_count:p.exact_date_event_count,celebration_date_review_count:p._celebrationExact.length,
+     latest_celebration_review_event_date:p._celebrationExact.length?p._celebrationExact[p._celebrationExact.length-1].event_date:null,
+     celebration_date_review_candidate:p._celebrationExact.length>0,
+     lapsed_review_candidate:['past-client','repeat-client'].includes(p.relationship_type)&&days!=null&&days>365,
+     relationship_edge_review_candidate:edgeCount>0,identity_only_imported:p.relationship_event_count===0&&p.has_import_provenance,
+     attention_review_score:score,attention_review_tier:tier,attention_reason_codes:reasons,human_review_required:true,automatic_outreach_authorized:false,
+     communication_safety_gate:p._sensitive.length?'sensitive-history-human-review':p.communication_preference_count===0?'communication-permission-unknown':'check-channel-specific-preferences'
+   };
+ });
+ const sortItems=rows=>rows.slice().sort((a,b)=>b.attention_review_score-a.attention_review_score||(new Date(b.last_relationship_event_at||0)-new Date(a.last_relationship_event_at||0))||String(a.display_name).localeCompare(String(b.display_name)));
+ const defs=[
+   ['worth-reviewing','Worth reviewing',10,x=>x.attention_review_tier!=='historical-low-review'],
+   ['past-repeat-relationships','Past / repeat relationships',20,x=>['past-client','repeat-client'].includes(x.relationship_type)],
+   ['referral-connections','Referral connections',30,x=>x.relationship_edge_review_candidate],
+   ['dates-worth-checking','Dates worth checking',40,x=>x.celebration_date_review_candidate],
+   ['sensitive-human-judgment','Sensitive — human judgment only',50,x=>x.has_sensitive_history]
+ ];
+ const queues=defs.map(([key,label,order,fn])=>{
+   const rows=sortItems(intelligence.filter(fn));
+   const top_items=rows.slice(0,4).map(x=>({...x,historical_date_for_review:key==='dates-worth-checking'?x.latest_celebration_review_event_date:null,historical_date_context:key==='dates-worth-checking'?(x._celebrationExact[x._celebrationExact.length-1]?.event_type||null):null,review_safety_state:'human-review-required'}));
+   return {queue_key:key,queue_label:label,queue_order:order,person_count:rows.length,sensitive_overlap_count:rows.filter(x=>x.has_sensitive_history).length,permission_unknown_count:rows.filter(x=>x.communication_safety_gate==='communication-permission-unknown').length,automatic_outreach_authorized_count:0,max_attention_review_score:rows[0]?.attention_review_score||0,top_items};
+ });
+ const memberships=queues.reduce((s,q)=>s+q.person_count,0);
+ const distinct=new Set();
+ defs.forEach(([k,l,o,fn])=>intelligence.filter(fn).forEach(x=>distinct.add(x.person_id)));
+ const metrics={
+   people_total:allPeople.length,people_with_history:allPeople.filter(p=>p.relationship_event_count>0).length,
+   identity_only_people:allPeople.filter(p=>p.relationship_event_count===0&&p.has_import_provenance).length,
+   relationship_events_total:events.length,people_with_relationship_edges:allPeople.filter(p=>p.outgoing_relationship_edge_count+p.incoming_relationship_edge_count>0).length,
+   people_with_contact_points:allPeople.filter(p=>p.contact_point_count>0).length,contact_points_total:contacts.length,
+   people_with_special_dates:allPeople.filter(p=>p.special_date_count>0).length,special_dates_total:specialDates.length,
+   people_with_communication_preferences:allPeople.filter(p=>p.communication_preference_count>0).length,communication_preferences_total:prefs.length,
+   opportunity_signals_total:opportunities.length,growth_actions_total:growthActions.length,
+   people_with_canonical_commercial_history:allPeople.filter(p=>p.canonical_commercial_history_available).length
+ };
+ const im={
+   high_review:intelligence.filter(x=>x.attention_review_tier==='high-review').length,
+   established_review:intelligence.filter(x=>x.attention_review_tier==='established-review').length,
+   context_review:intelligence.filter(x=>x.attention_review_tier==='context-review').length,
+   historical_low_review:intelligence.filter(x=>x.attention_review_tier==='historical-low-review').length,
+   sensitive_history_people:intelligence.filter(x=>x.has_sensitive_history).length,
+   lapsed_review_candidates:intelligence.filter(x=>x.lapsed_review_candidate).length,
+   celebration_date_review_candidates:intelligence.filter(x=>x.celebration_date_review_candidate).length,
+   relationship_edge_review_candidates:intelligence.filter(x=>x.relationship_edge_review_candidate).length,
+   automatic_outreach_authorized:0
+ };
+ return {allPeople,intelligence,dashboard:{contract_version:'relationship-dashboard-client-v1',organization:org,generated_at:new Date().toISOString(),relationship_metrics:metrics,intelligence_metrics:im,queue_metrics:{queue_memberships:memberships,distinct_people_in_any_queue:distinct.size,automatic_outreach_authorized:0},queues,safety:{human_review_required_for_all_queue_items:true,automatic_outreach_authorized:false,communication_permission_must_be_checked_separately:true,historical_dates_are_not_confirmed_special_dates:true,sensitive_history_requires_human_judgment:true}}};
+}
+async function loadDashboard(){
+ if(DEMO){state.dashboard=demoDashboard;state.allPeople=demoPeople;return}
+ if(state.core&&state.dashboard)return;
+ const orgPromise=fetchRows('organizations','id,name,business_timezone',q=>q.eq('id',ORG_ID).limit(1));
+ const reqs=[
+   fetchRows('people','id,organization_id,display_name,given_name,family_name,preferred_language,relationship_type,lead_temperature,vip,archived_at,created_at,updated_at',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('relationship_events','id,organization_id,person_id,event_type,occurred_at,event_date,date_precision,title,source_type,source_id,created_at',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('relationship_edges','id,organization_id,source_person_id,related_person_id,related_person_text,edge_type,relationship_context,evidence_strength,source_type,source_id,created_at',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('contact_points','id,person_id',q=>q.eq('organization_id',ORG_ID).is('archived_at',null)),
+   fetchRows('special_dates','id,person_id,date_type,month,day,year,label,recurrence,source,notes',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('communication_preferences','id,person_id,channel,status,source,source_note,recorded_at',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('booking_requests','id,person_id',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('reservations','id,booking_request_id,status',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('ledger_entries','id,booking_request_id,amount_cents',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('opportunity_signals','id,person_id,status',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('growth_actions','id,person_id,status',q=>q.eq('organization_id',ORG_ID)),
+   fetchRows('provenance_links','canonical_id,source_record_id',q=>q.eq('organization_id',ORG_ID).eq('canonical_table','people'))
+ ];
+ const [orgRows,parts]=await Promise.all([orgPromise,Promise.all(reqs)]);
+ const [basePeople,events,edges,contacts,specialDates,prefs,bookingRequests,reservations,ledgerEntries,opportunities,growthActions,provenance]=parts;
+ if(!orgRows.length){state.dashboard=null;return}
+ state.core={org:orgRows[0],basePeople,events,edges,contacts,specialDates,prefs,bookingRequests,reservations,ledgerEntries,opportunities,growthActions,provenance};
+ const built=buildLocalReadModel(state.core);
+ state.allPeople=built.allPeople;
+ state.dashboard=built.dashboard;
+}
+async function loadPeople(){
+ if(DEMO){let rows=[...demoPeople];if(state.peopleQuery)rows=rows.filter(p=>p.display_name.toLowerCase().includes(state.peopleQuery.toLowerCase()));if(state.peopleType!=='all')rows=rows.filter(p=>p.relationship_type===state.peopleType);state.peopleCount=rows.length;state.people=rows.slice(state.peoplePage*PAGE_SIZE,(state.peoplePage+1)*PAGE_SIZE);return}
+ let rows=[...(state.allPeople||[])];
+ if(state.peopleQuery){const needle=state.peopleQuery.toLowerCase();rows=rows.filter(p=>(p.display_name||'').toLowerCase().includes(needle))}
+ if(state.peopleType!=='all')rows=rows.filter(p=>p.relationship_type===state.peopleType);
+ rows.sort((a,b)=>String(a.display_name||'').localeCompare(String(b.display_name||'')));
+ state.peopleCount=rows.length;
+ state.people=rows.slice(state.peoplePage*PAGE_SIZE,(state.peoplePage+1)*PAGE_SIZE);
+}
+function applyStaticTranslations(){[...document.querySelectorAll('#nav button')].forEach(b=>b.textContent=t(b.dataset.page));if($('#logoutBtn'))$('#logoutBtn').textContent=t('logout');if($('#langBtn'))$('#langBtn').textContent=state.lang==='en'?'ES':'EN';}
+
+function gotoPage(page){state.page=page;document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(page==='relationships'&&!state.people.length){loadPeople().then(render).catch(showFatal)}else render()}
+function reasonLabel(code){const en={'repeat-client':'Repeat client history','past-client':'Past client history','referred-lead':'Referred relationship','relationship-edge':'Referral / relationship connection','multiple-historical-events':'Multiple historical interactions','exact-date-history':'Exact historical date exists','celebration-date-human-review':'Celebration-like date needs confirmation','sensitive-history-human-review':'Sensitive history — use judgment','lapsed-established-relationship-review':'Established relationship appears lapsed','vip':'VIP relationship','identity-only-imported':'Identity recovered; history still missing'};const es={'repeat-client':'Historial de cliente recurrente','past-client':'Historial de cliente anterior','referred-lead':'Relación por referido','relationship-edge':'Conexión de referido / relación','multiple-historical-events':'Múltiples interacciones históricas','exact-date-history':'Existe una fecha histórica exacta','celebration-date-human-review':'Fecha de celebración requiere confirmación','sensitive-history-human-review':'Historial sensible — usar criterio','lapsed-established-relationship-review':'Relación establecida parece inactiva','vip':'Relación VIP','identity-only-imported':'Identidad recuperada; falta historial'};return (state.lang==='es'?es:en)[code]||code||t('unknown')}
+function bestReason(x){const codes=x.attention_reason_codes||[];const priority=['repeat-client','past-client','lapsed-established-relationship-review','relationship-edge','referred-lead','multiple-historical-events','celebration-date-human-review','sensitive-history-human-review','identity-only-imported'];const c=priority.find(k=>codes.includes(k))||codes[0];return reasonLabel(c)}
+function findTopFocus(d){const q=(d.queues||[]).find(x=>x.queue_key==='worth-reviewing');return (q?.top_items||[]).slice(0,4)}
+function pathCard(icon,title,count,copy,page,label){return `<article class="growth-path"><div class="growth-icon">${icon}</div><div class="path-count">${Number(count||0).toLocaleString()}</div><h3>${esc(title)}</h3><p>${esc(copy)}</p><button class="btn small" data-goto="${esc(page)}">${esc(label)}</button></article>`}
+function bindGotoButtons(){document.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>gotoPage(b.dataset.goto))}
+function queueSummaryCard(q){return `<div class="queue-summary"><b>${Number(q?.person_count||0)}</b><span>${esc(queueLabel(q?.queue_key||''))}</span></div>`}
+
+function render(){applyStaticTranslations();if($('#appShell').classList.contains('hidden'))return;if(state.loading&&!state.dashboard){$('#main').innerHTML=`<div class="loading">${esc(t('loading'))}</div>`;return}({today:renderToday,relationships:renderRelationships,celebrations:renderCelebrations,opportunities:renderOpportunities,imports:renderImports,results:renderResults}[state.page]||renderToday)()}
+function metricCard(value,label){return `<div class="card metric"><strong>${esc(value)}</strong><span>${esc(label)}</span></div>`}
+function renderToday(){const d=state.dashboard;if(!d)return;const m=d.relationship_metrics||{},qm=d.queue_metrics||{};const focus=findTopFocus(d);const qEstablished=findQueue('past-repeat-relationships')||{},qRef=findQueue('referral-connections')||{},qDates=findQueue('dates-worth-checking')||{},qSensitive=findQueue('sensitive-human-judgment')||{};const peopleWithoutContacts=Math.max(0,(m.people_total||0)-(m.people_with_contact_points||0));$('#main').innerHTML=`
+ <section class="hero"><span class="eyebrow">PactWorks · Relationship Command Center</span><h1>${esc(t('todayTitle'))}</h1><p>${esc(t('todayIntro'))}</p></section>
+ <div class="pulse-grid"><div class="pulse-card"><b>${Number(m.people_total||0).toLocaleString()}</b><span>${esc(state.lang==='es'?'Relaciones canónicas':'Canonical relationships')}</span></div><div class="pulse-card"><b>${Number(m.people_with_history||0).toLocaleString()}</b><span>${esc(state.lang==='es'?'Con historial real':'With real history')}</span></div><div class="pulse-card"><b>${Number(qEstablished.person_count||0)}</b><span>${esc(state.lang==='es'?'Clientes anteriores / recurrentes':'Past / repeat clients')}</span></div><div class="pulse-card"><b>${Number(qRef.person_count||0)}</b><span>${esc(state.lang==='es'?'Conexiones de referidos':'Referral connections')}</span></div><div class="pulse-card"><b>${Number(qDates.person_count||0)}</b><span>${esc(state.lang==='es'?'Fechas por confirmar':'Dates to confirm')}</span></div><div class="pulse-card"><b>${Number(qSensitive.person_count||0)}</b><span>${esc(state.lang==='es'?'Historial sensible':'Sensitive history')}</span></div></div>
+ <div class="command-grid" style="margin-top:16px"><section class="card"><div class="section-title" style="margin-top:0"><div><h2>${esc(state.lang==='es'?'Haz esto primero':'Do this first')}</h2><p>${esc(state.lang==='es'?'Pocas relaciones, ordenadas por evidencia — tú decides la acción.':'A few relationships ranked by evidence — you decide the action.')}</p></div><span class="badge gold">${focus.length}</span></div><div class="focus-list">${focus.length?focus.map((x,i)=>`<article class="focus-item"><div class="focus-rank">${i+1}</div><div class="avatar">${esc(initials(x.display_name))}</div><div class="focus-copy"><strong>${esc(x.display_name)}</strong><div class="focus-reason">${esc(bestReason(x))} • ${esc(typeLabel(x.relationship_type))}${x.last_relationship_event_at?' • '+esc(fmtDate(x.last_relationship_event_at)):''}</div>${x.has_sensitive_history?`<div class="person-meta"><span class="badge bad">${esc(state.lang==='es'?'Criterio humano':'Human judgment')}</span></div>`:''}</div><button class="btn small primary" data-person="${esc(x.person_id)}">${esc(t('open'))}</button></article>`).join(''):`<div class="empty">${esc(state.lang==='es'?'No hay relaciones para revisar ahora.':'No relationships need review right now.')}</div>`}</div></section>
+ <aside class="command-side"><section class="card rule-card"><h3>${esc(state.lang==='es'?'La regla de PactWorks':'The PactWorks rule')}</h3><p>${esc(state.lang==='es'?'Una señal significa “mira esta relación”, no “envía marketing”. Primero entiende a la persona. Después verifica el canal y el permiso.':'A signal means “look at this relationship,” not “send marketing.” Understand the person first. Then verify the channel and permission.')}</p><p style="margin-top:10px"><b>${esc(state.lang==='es'?'Contacto automático autorizado: 0':'Automatic outreach authorized: 0')}</b></p></section><section class="card"><div class="section-title" style="margin-top:0"><div><h2>${esc(state.lang==='es'?'Estado de enriquecimiento':'Enrichment status')}</h2><p>${esc(state.lang==='es'?'La relación existe aunque todavía falten datos.':'The relationship can be real even when details are still missing.')}</p></div></div><div class="value-strip"><div><b>${peopleWithoutContacts}</b><span>${esc(state.lang==='es'?'sin contacto estructurado':'without structured contact')}</span></div><div><b>${m.special_dates_total||0}</b><span>${esc(state.lang==='es'?'fechas confirmadas':'confirmed dates')}</span></div><div><b>${m.communication_preferences_total||0}</b><span>${esc(state.lang==='es'?'permisos guardados':'saved permissions')}</span></div><div><b>${m.identity_only_people||0}</b><span>${esc(state.lang==='es'?'solo identidad':'identity only')}</span></div></div></section></aside></div>
+ <div class="section-title"><div><h2>${esc(state.lang==='es'?'Caminos de crecimiento':'Growth paths')}</h2><p>${esc(state.lang==='es'?'Caminos humanos para fortalecer relaciones antes de campañas automáticas.':'Human paths for strengthening relationships before automated campaigns.')}</p></div></div><div class="growth-path-grid">${pathCard('↻',state.lang==='es'?'Reconectar relaciones establecidas':'Reconnect established relationships',qEstablished.person_count||0,state.lang==='es'?'Revisa clientes anteriores y recurrentes antes de pensar en campañas.':'Review past and repeat clients before thinking about campaigns.','relationships',state.lang==='es'?'Ver relaciones':'View relationships')}${pathCard('↗',state.lang==='es'?'Revisar referidos':'Review referrals',qRef.person_count||0,state.lang==='es'?'Entiende quién conectó a quién y preserva el contexto humano.':'Understand who connected whom and preserve the human context.','relationships',state.lang==='es'?'Ver conexiones':'View connections')}${pathCard('✦',state.lang==='es'?'Confirmar celebraciones':'Confirm celebrations',qDates.person_count||0,state.lang==='es'?'Convierte una fecha histórica en fecha especial solo después de confirmarla.':'Turn a historical date into a special date only after confirmation.','celebrations',state.lang==='es'?'Revisar fechas':'Review dates')}${pathCard('＋',state.lang==='es'?'Enriquecer relaciones':'Enrich relationships',peopleWithoutContacts,state.lang==='es'?'Agrega teléfono, correo, familia e idioma cuando la evidencia lo permita.':'Add phone, email, family and language when evidence supports it.','relationships',state.lang==='es'?'Abrir personas':'Open People')}${pathCard('⇩',state.lang==='es'?'Importar más historia':'Import more history',m.identity_only_people||0,state.lang==='es'?'Conserva procedencia y deduplicación mientras recuperamos más memoria.':'Preserve provenance and deduplication as more relationship memory is recovered.','imports',state.lang==='es'?'Ver importaciones':'View imports')}</div>
+ <div class="section-title"><div><h2>${esc(state.lang==='es'?'Colas de revisión':'Review queues')}</h2><p>${esc(state.lang==='es'?`${qm.distinct_people_in_any_queue||0} personas distintas necesitan alguna revisión humana.`:`${qm.distinct_people_in_any_queue||0} distinct people currently need some form of human review.`)}</p></div></div><div class="queue-summary-grid">${(d.queues||[]).map(queueSummaryCard).join('')}</div>`;bindPersonButtons();bindGotoButtons()}
+function renderQueueCard(q){const items=q.top_items||[];return `<section class="card queue-card"><div class="queue-head"><div class="queue-head-row"><h3>${esc(queueLabel(q.queue_key))}</h3><span class="badge gold">${q.person_count??0}</span></div><p>${queueHelp(q.queue_key)}</p></div><div class="queue-list">${items.length?items.map(x=>renderQueuePerson(x)).join(''):`<div class="empty">${esc(state.lang==='es'?'Nada que revisar aquí.':'Nothing to review here.')}</div>`}</div></section>`}
+function queueHelp(k){return esc({
+ 'worth-reviewing':state.lang==='es'?'Señales más fuertes para mirar primero.':'Strongest evidence-backed items to look at first.',
+ 'past-repeat-relationships':state.lang==='es'?'Relaciones anteriores o recurrentes confirmadas por clasificación.':'Past or repeat relationships from canonical classification.',
+ 'referral-connections':state.lang==='es'?'Conexiones explícitas preservadas como relación.':'Explicit referral/relationship connections preserved as edges.',
+ 'dates-worth-checking':state.lang==='es'?'Fechas históricas que necesitan confirmación.':'Historical dates that need human confirmation.',
+ 'sensitive-human-judgment':state.lang==='es'?'Historial que requiere cuidado adicional.':'History that requires extra human care.'
+ }[k]||'')}
+function renderQueuePerson(x){const date=x.historical_date_for_review?fmtDateOnly(x.historical_date_for_review):fmtDate(x.last_relationship_event_at);return `<button class="queue-person" data-person="${esc(x.person_id)}"><div class="avatar">${esc(initials(x.display_name))}</div><div><strong>${esc(x.display_name)}</strong><div class="sub">${esc(typeLabel(x.relationship_type))} • ${esc(date)}${x.has_sensitive_history?' • '+(state.lang==='es'?'Sensible':'Sensitive'):''}</div></div><span class="score">${Number(x.attention_review_score||0)}</span></button>`}
+function bindPersonButtons(){document.querySelectorAll('[data-person]').forEach(b=>b.onclick=()=>openPerson(b.dataset.person))}
+function renderRelationships(){
+ $('#main').innerHTML=`<div class="page-title"><div><span class="eyebrow">PactWorks</span><h1>${esc(t('relationships'))}</h1><p>${esc(t('relationshipsIntro'))}</p></div><span class="badge good">${state.peopleCount||state.dashboard?.relationship_metrics?.people_total||0} ${esc(t('people'))}</span></div>
+ <div class="searchbar"><input id="peopleSearch" value="${esc(state.peopleQuery)}" placeholder="${esc(t('search'))}"><select id="peopleType"><option value="all">${esc(t('allTypes'))}</option>${['repeat-client','past-client','referred-lead','inquiry-only','partner-vendor','other'].map(v=>`<option value="${v}" ${state.peopleType===v?'selected':''}>${esc(typeLabel(v))}</option>`).join('')}</select><button id="peopleSearchBtn" class="btn primary">${esc(state.lang==='es'?'Buscar':'Search')}</button></div>
+ <div class="people-list">${state.people.length?state.people.map(renderPersonCard).join(''):`<div class="card empty"><strong>${esc(t('noPeople'))}</strong></div>`}</div>
+ <div class="pagination"><span>${esc(t('showing'))} ${state.peopleCount?state.peoplePage*PAGE_SIZE+1:0}–${Math.min((state.peoplePage+1)*PAGE_SIZE,state.peopleCount)} ${esc(t('of'))} ${state.peopleCount}</span><div class="toolbar"><button id="prevPeople" class="btn small" ${state.peoplePage===0?'disabled':''}>← ${esc(t('previous'))}</button><button id="nextPeople" class="btn small" ${(state.peoplePage+1)*PAGE_SIZE>=state.peopleCount?'disabled':''}>${esc(t('next'))} →</button></div></div>`;
+ $('#peopleSearchBtn').onclick=doPeopleSearch;$('#peopleSearch').onkeydown=e=>{if(e.key==='Enter')doPeopleSearch()};$('#peopleType').onchange=doPeopleSearch;$('#prevPeople').onclick=async()=>{state.peoplePage--;await loadPeople();renderRelationships()};$('#nextPeople').onclick=async()=>{state.peoplePage++;await loadPeople();renderRelationships()};bindPersonButtons();
+}
+function renderPersonCard(p){const edge=(p.outgoing_relationship_edge_count||0)+(p.incoming_relationship_edge_count||0);return `<article class="card person-card"><div class="avatar">${esc(initials(p.display_name))}</div><div><strong>${esc(p.display_name)}</strong><div class="sub">${p.relationship_event_count||0} ${esc(t('events'))} • ${esc(t('lastEvidence'))}: ${esc(fmtDate(p.last_relationship_event_at))}</div><div class="person-meta"><span class="badge ${p.relationship_type==='repeat-client'?'good':p.relationship_type==='past-client'?'gold':p.relationship_type==='referred-lead'?'blue':'muted'}">${esc(typeLabel(p.relationship_type))}</span>${edge?`<span class="badge blue">${edge} ${esc(state.lang==='es'?'conexión':'connection')}</span>`:''}${p.relationship_event_count===0?`<span class="badge warn">${esc(state.lang==='es'?'Solo identidad':'Identity only')}</span>`:''}</div></div><button class="btn small primary" data-person="${esc(p.person_id)}">${esc(t('open'))}</button></article>`}
+async function doPeopleSearch(){state.peopleQuery=$('#peopleSearch').value.trim();state.peopleType=$('#peopleType').value;state.peoplePage=0;state.loading=true;try{await loadPeople()}catch(e){showFatal(e)}finally{state.loading=false;renderRelationships()}}
+function findQueue(k){return state.dashboard?.queues?.find(q=>q.queue_key===k)}
+function renderCelebrations(){const q=findQueue('dates-worth-checking')||{person_count:0,top_items:[]};$('#main').innerHTML=`<div class="page-title"><div><span class="eyebrow">Relationship intelligence</span><h1>${esc(t('celebrationsTitle'))}</h1><p>${esc(t('celebrationsIntro'))}</p></div><span class="badge gold">${q.person_count||0}</span></div><div class="lens-row" style="margin-bottom:14px"><button class="lens active">${esc(state.lang==='es'?'Fechas por confirmar':'Dates to confirm')}</button><button class="lens locked" disabled>${esc(t('today'))}</button><button class="lens locked" disabled>${esc(state.lang==='es'?'Esta semana':'This Week')}</button><button class="lens locked" disabled>${esc(state.lang==='es'?'Próximas':'Upcoming')}</button><button class="lens locked" disabled>${esc(state.lang==='es'?'Mapa':'Map')}</button><button class="lens locked" disabled>${esc(state.lang==='es'?'Historial de sorpresas':'Surprise History')}</button></div><div class="notice"><b>${esc(state.lang==='es'?'Importante':'Important')}:</b> ${esc(state.lang==='es'?'Una fecha histórica no se convierte en cumpleaños, aniversario u otra fecha especial hasta que una persona la confirme. Las vistas de Hoy / Semana / Mapa se activarán después.':'A historical date does not become a birthday, anniversary, or other special date until a human confirms it. Today / Week / Map views unlock after that.')}</div><div class="people-list" style="margin-top:14px">${(q.top_items||[]).length?(q.top_items||[]).map(x=>`<article class="card person-card"><div class="avatar">${esc(initials(x.display_name))}</div><div><strong>${esc(x.display_name)}</strong><div class="sub">${esc(x.historical_date_context||t('unknown'))} • ${esc(fmtDateOnly(x.historical_date_for_review))}</div>${x.has_sensitive_history?`<div class="person-meta"><span class="badge bad">${esc(state.lang==='es'?'Historial sensible':'Sensitive history')}</span></div>`:''}<div class="action-lock"><button class="btn small" disabled>${esc(state.lang==='es'?'Llamar personalmente':'Call Personally')}</button><button class="btn small" disabled>${esc(state.lang==='es'?'Planear serenata':'Plan Serenade')}</button></div></div><button class="btn small primary" data-person="${esc(x.person_id)}">${esc(t('open'))}</button></article>`).join(''):`<div class="card empty">${esc(state.lang==='es'?'No hay fechas para revisar.':'No dates currently need review.')}</div>`}</div><div class="notice info" style="margin-top:14px">${esc(state.lang==='es'?'Las acciones personales permanecen bloqueadas hasta confirmar la fecha, el contacto correcto y el permiso apropiado.':'Personal actions stay locked until the date, correct contact point, and appropriate permission are confirmed.')}</div>`;bindPersonButtons()}
+function renderOpportunities(){const d=state.dashboard||{},m=d.relationship_metrics||{},im=d.intelligence_metrics||{};const qEstablished=findQueue('past-repeat-relationships')||{},qRef=findQueue('referral-connections')||{},qDates=findQueue('dates-worth-checking')||{};const missing=Math.max(0,(m.people_total||0)-(m.people_with_contact_points||0));$('#main').innerHTML=`<div class="page-title"><div><span class="eyebrow">4.5 Relationship Intelligence</span><h1>${esc(state.lang==='es'?'Caminos de oportunidad':'Opportunity paths')}</h1><p>${esc(state.lang==='es'?'Todavía no creamos oportunidades permanentes. Primero revisamos relaciones reales y demostramos por qué merecen atención.':'We still do not create permanent opportunities yet. We first review real relationships and prove why they deserve attention.')}</p></div><span class="badge muted">${m.opportunity_signals_total||0} ${esc(state.lang==='es'?'canónicas':'canonical')}</span></div><div class="notice info"><b>${esc(state.lang==='es'?'Diferencia importante':'Important distinction')}:</b> ${esc(state.lang==='es'?'Estas son rutas de revisión, no permiso para contactar ni oportunidades de venta confirmadas.':'These are review paths, not contact permission and not confirmed sales opportunities.')}</div><div class="growth-path-grid" style="margin-top:14px">${pathCard('↻',state.lang==='es'?'Relaciones establecidas inactivas':'Lapsed established relationships',im.lapsed_review_candidates||qEstablished.person_count||0,state.lang==='es'?'Clientes anteriores o recurrentes con suficiente antigüedad para revisión humana.':'Past or repeat clients old enough to merit human review.','relationships',state.lang==='es'?'Revisar':'Review')}${pathCard('↗',state.lang==='es'?'Red de referidos':'Referral network',qRef.person_count||0,state.lang==='es'?'Relaciones donde existe evidencia explícita de quién conectó a quién.':'Relationships with explicit evidence of who connected whom.','relationships',state.lang==='es'?'Ver red':'View network')}${pathCard('✦',state.lang==='es'?'Celebraciones potenciales':'Potential celebrations',qDates.person_count||0,state.lang==='es'?'Fechas exactas de tipo celebración que aún necesitan confirmación humana.':'Exact celebration-like dates that still need human confirmation.','celebrations',state.lang==='es'?'Revisar fechas':'Review dates')}${pathCard('＋',state.lang==='es'?'Enriquecimiento pendiente':'Enrichment backlog',missing,state.lang==='es'?'Personas sin teléfono/correo estructurado en la nueva base canónica.':'People without structured phone/email in the new canonical database.','relationships',state.lang==='es'?'Abrir personas':'Open People')}${pathCard('◎',state.lang==='es'?'Alta atención':'High attention',im.high_review||0,state.lang==='es'?'La evidencia más fuerte del sistema, siempre con revisión humana.':'The strongest evidence in the system, always requiring human review.','today',state.lang==='es'?'Ver Hoy':'View Today')}</div>`;bindGotoButtons()}
+function renderImports(){const m=state.dashboard?.relationship_metrics||{};const missing=Math.max(0,(m.people_total||0)-(m.people_with_contact_points||0));$('#main').innerHTML=`<div class="page-title"><div><span class="eyebrow">Provenance</span><h1>${esc(t('importsTitle'))}</h1><p>${esc(t('importsIntro'))}</p></div></div><div class="grid cols-4">${metricCard(m.people_total||0,t('people'))}${metricCard(m.relationship_events_total||0,t('history'))}${metricCard(m.identity_only_people||0,state.lang==='es'?'Solo identidad':'Identity only')}${metricCard(m.people_with_relationship_edges||0,state.lang==='es'?'Con relaciones':'With connections')}</div><div class="section-title"><div><h2>${esc(state.lang==='es'?'Qué falta enriquecer':'What still needs enrichment')}</h2><p>${esc(state.lang==='es'?'Importar historia y enriquecer personas son tareas distintas.':'Importing history and enriching People are intentionally separate jobs.')}</p></div></div><div class="grid cols-3">${metricCard(missing,state.lang==='es'?'Sin contacto estructurado':'Without structured contact')}${metricCard(m.special_dates_total||0,state.lang==='es'?'Fechas confirmadas':'Confirmed special dates')}${metricCard(m.communication_preferences_total||0,state.lang==='es'?'Permisos registrados':'Recorded permissions')}</div><div class="notice good" style="margin-top:16px">${esc(state.lang==='es'?'La UI no necesita leer tablas de staging para mostrar relaciones. La procedencia se abre desde cada perfil y las futuras importaciones deben conservar deduplicación y evidencia.':'The UI does not need staging tables to display relationships. Provenance is available inside each Person profile, and future imports must preserve deduplication and evidence.')}</div>`}
+function renderResults(){const d=state.dashboard||{},m=d.relationship_metrics||{},qm=d.queue_metrics||{};const actions=m.growth_actions_total||0;$('#main').innerHTML=`<div class="page-title"><div><span class="eyebrow">Growth measurement</span><h1>${esc(t('resultsTitle'))}</h1><p>${esc(state.lang==='es'?'PactWorks medirá la cadena completa: relación → revisión → acción → reserva → ingreso. Hoy solo mostramos las etapas que realmente existen.':'PactWorks will measure the full chain: relationship → review → action → booking → revenue. Today we show only stages that really exist.')}</p></div></div><div class="measure-chain"><div class="measure-node"><b>${m.people_total||0}</b><span>${esc(state.lang==='es'?'Relaciones':'Relationships')}</span></div><div class="measure-node"><b>${qm.distinct_people_in_any_queue||0}</b><span>${esc(state.lang==='es'?'Revisión humana':'Human review')}</span></div><div class="measure-node"><b>${actions}</b><span>${esc(state.lang==='es'?'Acciones registradas':'Recorded actions')}</span></div><div class="measure-node"><b>${m.people_with_canonical_commercial_history||0}</b><span>${esc(state.lang==='es'?'Historial comercial canónico':'Canonical commercial history')}</span></div><div class="measure-node"><b>—</b><span>${esc(state.lang==='es'?'Ganancia atribuida (futuro)':'Attributed profit (future)')}</span></div></div><div class="notice info" style="margin-top:16px">${esc(state.lang==='es'?'No se fabrican conversiones ni ingresos. Las métricas de resultados crecerán solamente cuando existan acciones, reservas y ledger canónicos.':'No conversions or revenue are fabricated. Results metrics will grow only when canonical actions, bookings, and ledger entries exist.')}</div>`}
+
+
+function originalSourceText(payload){
+ const note=payload?.suggestion?.notes;
+ if(typeof note==='string'&&note.trim())return note.trim();
+ const body=payload?.body||payload?.message||payload?.text||payload?.content;
+ return typeof body==='string'&&body.trim()?body.trim():''
+}
+function sourceIdentity(payload){return {wix_contact_id:payload?.wix_contact_id||null,wix_conversation_id:payload?.wix_conversation_id||null,confidence:payload?.confidence??null}}
+function mediaEvidenceRefs(payload){
+ const hits=[];const seen=new Set();
+ function add(path,value,kind='reference'){
+  const s=String(value||'').trim();if(!s)return;const sig=path+'|'+s;if(seen.has(sig))return;seen.add(sig);hits.push({path,value:s,kind})
+ }
+ function scanText(s,path){
+  if(typeof s!=='string')return;
+  const urls=s.match(/https?:\/\/[^\s<>"']+/g)||[];
+  urls.forEach(u=>{const clean=u.replace(/[),.;]+$/,'');const low=clean.toLowerCase();add(path,clean,/wixstatic\.com\/media\//.test(low)?'image':/\.(jpg|jpeg|png|gif|webp|heic)(\?|$)/.test(low)?'image':'link')});
+  const files=s.match(/\b[^\s\/]+\.(jpg|jpeg|png|gif|webp|heic|mp4|mov|m4a|mp3|wav|pdf|docx?)\b/ig)||[];
+  files.forEach(f=>add(path,f,'file'))
+ }
+ function walk(v,path=[]){
+  if(typeof v==='string'){scanText(v,path.join('.'));return}
+  if(Array.isArray(v)){v.forEach((x,i)=>walk(x,path.concat(String(i))));return}
+  if(!v||typeof v!=='object')return;
+  for(const [k,val] of Object.entries(v)){
+   const p=path.concat(k),key=k.toLowerCase();
+   if(/media|attach|photo|image|video|audio|file|document/.test(key)){
+    const printable=typeof val==='string'?val:(val&&typeof val==='object'?JSON.stringify(val):String(val??''));add(p.join('.'),printable,'reference')
+   }
+   walk(val,p)
+  }
+ }
+ walk(payload);return hits.slice(0,40)
+}
+function renderSourceEvidence(x){
+ if(x.evidence_error)return `<div class="notice"><b>${esc(state.lang==='es'?'Evidencia original no disponible':'Original evidence unavailable')}.</b><br>${esc(x.evidence_error)}</div>`;
+ const raw=x.raw_payload||null,original=originalSourceText(raw),ids=sourceIdentity(raw),media=mediaEvidenceRefs(raw);
+ const batch=x.import_batch_name||x.source_type||t('source');
+ return `<article class="evidence-card"><div class="evidence-head"><div><strong>${esc(batch)}</strong><small>${esc(x.source_filename||'Wix Inbox import')} ${x.source_row_number?`• row ${esc(x.source_row_number)}`:''}</small></div><span class="badge muted">${esc(x.batch_status||'source')}</span></div><div class="evidence-original"><div class="evidence-original-label">${esc(state.lang==='es'?'Texto original capturado':'Original captured text')}</div>${original?`<div class="evidence-text">${esc(original)}</div>`:`<div class="evidence-none">${esc(state.lang==='es'?'Este registro importado no contiene texto original capturado.':'This imported record does not contain captured original text.')}</div>`}<div class="evidence-meta"><div><span>${esc(state.lang==='es'?'Conversación Wix':'Wix conversation')}</span><b>${esc(ids.wix_conversation_id||x.source_key||'—')}</b></div><div><span>${esc(state.lang==='es'?'Contacto Wix':'Wix contact')}</span><b>${esc(ids.wix_contact_id||'—')}</b></div><div><span>${esc(state.lang==='es'?'Clave de origen':'Source key')}</span><b>${esc(x.source_key||'—')}</b></div><div><span>${esc(state.lang==='es'?'Importado':'Imported')}</span><b>${esc(fmtDate(x.source_created_at))}</b></div></div><div class="evidence-original-label" style="margin-top:11px">${esc(state.lang==='es'?'Medios / archivos capturados':'Captured media / files')}</div>${media.length?`<div class="media-list">${media.map(m=>m.kind==='image'&&/^https:\/\//i.test(m.value)?`<div class="media-ref"><b>${esc(m.path||'media')}</b><br><a href="${esc(m.value)}" target="_blank" rel="noopener noreferrer">${esc(m.value)}</a><div style="margin-top:7px"><img src="${esc(m.value)}" alt="Imported Wix evidence" loading="lazy" style="display:block;max-width:100%;max-height:220px;border-radius:9px;border:1px solid #d8cbb9;background:#fff"></div></div>`:`<div class="media-ref"><b>${esc(m.path||m.kind)}</b><br>${/^https:\/\//i.test(m.value)?`<a href="${esc(m.value)}" target="_blank" rel="noopener noreferrer">${esc(m.value)}</a>`:esc(m.value)}</div>`).join('')}</div>`:`<div class="evidence-none">${esc(state.lang==='es'?'No se capturaron referencias de fotos, video, audio o archivos en este registro de origen.':'No photo, video, audio, attachment, or file references were captured in this source record.')}</div>`}${raw?`<details class="evidence-details"><summary>${esc(state.lang==='es'?'Ver registro de origen completo (JSON)':'View complete raw source record (JSON)')}</summary><pre class="raw-json">${esc(JSON.stringify(raw,null,2))}</pre></details>`:''}</div></article>`
+}
+
+async function openPerson(id){
+ document.body.style.overflow='hidden';$('#modalHost').innerHTML=`<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h2>${esc(t('profile'))}</h2><button class="btn small" id="closeModal">✕</button></div><div class="modal-body"><div class="loading">${esc(t('loading'))}</div></div></div></div>`;$('#closeModal').onclick=closeModal;$('#modalBackdrop').onclick=e=>{if(e.target.id==='modalBackdrop')closeModal()};
+ try{
+   let snap;
+   if(DEMO)snap=demoSnapshot(id);
+   else{
+     const p=(state.allPeople||[]).find(x=>x.person_id===id);
+     if(!p)throw new Error('Person not visible');
+     const [hist,contacts,prefs,dates,opps,acts,provLinks]=await Promise.all([
+       fetchRows('relationship_events','id,person_id,household_id,event_type,occurred_at,event_date,date_precision,source_event_key,title,body,source_type,source_id,created_at',q=>q.eq('organization_id',ORG_ID).eq('person_id',id).order('occurred_at',{ascending:false}).limit(20)),
+       fetchRows('contact_points','id,kind,label,value_raw,value_normalized,is_primary,verification_status,source,created_at',q=>q.eq('organization_id',ORG_ID).eq('person_id',id).is('archived_at',null)),
+       fetchRows('communication_preferences','id,channel,status,source,source_note,recorded_at',q=>q.eq('organization_id',ORG_ID).eq('person_id',id)),
+       fetchRows('special_dates','id,date_type,month,day,year,label,recurrence,source,notes',q=>q.eq('organization_id',ORG_ID).eq('person_id',id)),
+       fetchRows('opportunity_signals','id,signal_type,score,title,explanation,status,detected_at,expires_at',q=>q.eq('organization_id',ORG_ID).eq('person_id',id)),
+       fetchRows('growth_actions','id,opportunity_signal_id,action_type,status,scheduled_for,completed_at,outcome,created_at',q=>q.eq('organization_id',ORG_ID).eq('person_id',id)),
+       fetchRows('provenance_links','source_record_id',q=>q.eq('organization_id',ORG_ID).eq('canonical_table','people').eq('canonical_id',id))
+     ]);
+     const edgeRows=(state.core?.edges||[]).filter(e=>e.source_person_id===id||e.related_person_id===id).map(e=>{
+       const outgoing=e.source_person_id===id, counterpartId=outgoing?e.related_person_id:e.source_person_id;
+       const cp=(state.allPeople||[]).find(x=>x.person_id===counterpartId);
+       return {...e,direction:outgoing?'outgoing':'incoming',counterpart_display_name:cp?.display_name||e.related_person_text||null};
+     });
+     let provenance=[];
+     if(provLinks.length){
+       const ids=provLinks.map(x=>x.source_record_id);
+       const {data:sr,error:srErr}=await db.from('source_records').select('id,source_row_number,source_key,import_batch_id,created_at,raw_payload').eq('organization_id',ORG_ID).in('id',ids);
+       if(srErr){
+         provenance=ids.map(source_record_id=>({source_record_id,evidence_error:srErr.message||'Source record could not be read.'}));
+       }else{
+         const batchIds=[...new Set((sr||[]).map(x=>x.import_batch_id).filter(Boolean))];
+         let batches=[],batchError='';
+         if(batchIds.length){const {data:b,error:bErr}=await db.from('import_batches').select('id,name,source_type,source_filename,status').eq('organization_id',ORG_ID).in('id',batchIds);if(bErr)batchError=bErr.message||'Import batch metadata could not be read.';else batches=b||[]}
+         provenance=(sr||[]).map(r=>{const b=batches.find(x=>x.id===r.import_batch_id)||{};return {source_record_id:r.id,source_row_number:r.source_row_number,source_key:r.source_key,import_batch_id:r.import_batch_id,import_batch_name:b.name,source_type:b.source_type,source_filename:b.source_filename,batch_status:b.status,source_created_at:r.created_at,raw_payload:r.raw_payload,batch_metadata_warning:batchError}})
+       }
+     }
+     snap={profile:p,contacts,households:[],special_dates:dates,communication_preferences:prefs,relationship_edges:edgeRows,recent_history:hist.map(h=>({...h,event_id:h.id})),import_provenance:provenance,opportunities:opps,growth_actions:acts};
+   }
+   if(!snap)throw new Error('Person not visible');
+   renderPersonModal(snap)
+ }catch(e){document.querySelector('.modal-body').innerHTML=`<div class="notice bad">${esc(e.message||e)}</div>`}
+}
+function closeModal(){document.body.style.overflow='';$('#modalHost').innerHTML=''}
+function demoSnapshot(id){const p=demoPeople.find(x=>x.person_id===id)||{person_id:id,display_name:'Maria Demo',relationship_type:'past-client',lead_temperature:'cold',preferred_language:'spanish',relationship_event_count:1,last_relationship_event_at:'2021-05-17T21:32:03Z',has_import_provenance:true};return {profile:p,contacts:[],households:[],special_dates:[],communication_preferences:[],relationship_edges:p.relationship_type==='referred-lead'?[{id:'edge-demo',direction:'outgoing',edge_type:'referred-by',counterpart_display_name:'Referral contact',relationship_context:'Demo relationship context',evidence_strength:'explicit'}]:[],recent_history:p.relationship_event_count?[{event_id:'event-demo',event_type:'Birthday',occurred_at:'2021-05-17T21:32:03Z',event_date:null,date_precision:'source-text',title:'Historical relationship inquiry',body:'Demo-only history text.',source_type:'wix-inbox-import'}]:[],import_provenance:[{source_record_id:'demo-source',source_row_number:2,source_key:'demo-conversation',import_batch_name:'Wix Inbox Historical Recovery — Demo',source_type:'wix-inbox-recovery',source_filename:'wix-inbox-demo.csv',batch_status:'committed',source_created_at:'2026-08-23T18:50:00Z',raw_payload:{entity_type:'person',confidence:.99,wix_contact_id:'demo-contact',wix_conversation_id:'demo-conversation',suggestion:{display_name:p.display_name,notes:'Hello, I would like information for a birthday event. This is demo-only original-source text used to verify the evidence viewer.'}}}],opportunities:[],growth_actions:[]}}
+function renderPersonModal(s){const p=s.profile||{};const contacts=s.contacts||[],prefs=s.communication_preferences||[],dates=s.special_dates||[],edges=s.relationship_edges||[],hist=s.recent_history||[],prov=s.import_provenance||[];document.querySelector('.modal-body').innerHTML=`
+ <div class="profile-hero"><div class="avatar">${esc(initials(p.display_name))}</div><div><h3>${esc(p.display_name||t('unknown'))}</h3><div class="profile-chips"><span class="badge gold">${esc(typeLabel(p.relationship_type))}</span><span class="badge muted">${esc(p.lead_temperature||t('unknown'))}</span><span class="badge blue">${p.relationship_event_count||0} ${esc(t('events'))}</span>${p.relationship_event_count===0?`<span class="badge warn">${esc(state.lang==='es'?'Solo identidad':'Identity only')}</span>`:''}</div></div></div>
+ <div class="notice info" style="margin-bottom:16px"><b>${esc(t('readOnly'))}.</b> ${esc(t('readOnlyCopy'))}</div>
+ <div class="profile-grid"><section><div class="section-title" style="margin-top:0"><h2>${esc(t('recentHistory'))}</h2></div><div class="timeline">${hist.length?hist.map(renderHistory).join(''):`<div class="empty">${esc(t('noHistory'))}</div>`}</div></section>
+ <aside><div class="card" style="margin-bottom:12px"><div class="section-title" style="margin-top:0"><h2>${esc(state.lang==='es'?'Resumen':'Summary')}</h2></div><div class="kv"><span>${esc(t('relationship'))}</span><b>${esc(typeLabel(p.relationship_type))}</b></div><div class="kv"><span>${esc(t('temperature'))}</span><b>${esc(p.lead_temperature||t('unknown'))}</b></div><div class="kv"><span>${esc(t('language'))}</span><b>${esc(p.preferred_language||t('unknown'))}</b></div><div class="kv"><span>${esc(t('lastEvidence'))}</span><b>${esc(fmtDate(p.last_relationship_event_at))}</b></div></div><div class="card" style="margin-bottom:12px"><div class="section-title" style="margin-top:0"><h2>${esc(state.lang==='es'?'Valor de relación':'Relationship value')}</h2></div><div class="value-strip"><div><b>${p.canonical_booking_request_count||0}</b><span>${esc(state.lang==='es'?'solicitudes':'booking requests')}</span></div><div><b>${p.canonical_reservation_count||0}</b><span>${esc(state.lang==='es'?'reservas':'reservations')}</span></div><div><b>${p.canonical_completed_reservation_count||0}</b><span>${esc(state.lang==='es'?'completadas':'completed')}</span></div><div><b>${p.canonical_ledger_entry_count||0}</b><span>${esc(state.lang==='es'?'movimientos ledger':'ledger entries')}</span></div></div>${p.canonical_commercial_history_available?'':`<div class="sub" style="margin-top:9px">${esc(state.lang==='es'?'Aún no existe historial comercial canónico para esta Persona; no se infiere valor de por vida.':'No canonical commercial history exists for this Person yet; lifetime value is not inferred.')}</div>`}</div>
+ <div class="card" style="margin-bottom:12px"><div class="section-title" style="margin-top:0"><h2>${esc(t('connections'))}</h2></div>${edges.length?`<div class="mini-list">${edges.map(e=>`<div class="mini-item"><strong>${esc(e.counterpart_display_name||e.related_person_text||t('unknown'))}</strong><p>${esc(e.edge_type||'relationship')} ${e.relationship_context?'• '+esc(e.relationship_context):''}</p></div>`).join('')}</div>`:`<div class="sub">${esc(t('noConnections'))}</div>`}</div>
+ <div class="card" style="margin-bottom:12px"><div class="section-title" style="margin-top:0"><h2>${esc(t('contactsPermissions'))}</h2></div>${contacts.length?contacts.map(c=>`<div class="kv"><span>${esc(c.kind)}</span><b>${esc(c.value_raw)}</b></div>`).join(''):`<div class="sub">${esc(t('noContacts'))}</div>`}<div style="height:8px"></div>${prefs.length?prefs.map(x=>`<div class="kv"><span>${esc(x.channel)}</span><b>${esc(x.status)}</b></div>`).join(''):`<div class="notice" style="margin-top:8px">${esc(t('noPermissions'))}</div>`}${dates.length?`<div class="section-title"><h2>${esc(state.lang==='es'?'Fechas especiales':'Special dates')}</h2></div>${dates.map(d=>`<div class="kv"><span>${esc(d.date_type)}</span><b>${esc(`${d.month}/${d.day}${d.year?'/'+d.year:''}`)}</b></div>`).join('')}`:`<div class="sub" style="margin-top:9px">${esc(t('noDates'))}</div>`}</div>
+ <div class="card"><div class="section-title" style="margin-top:0"><div><h2>${esc(t('sourceEvidence'))}</h2><p>${esc(state.lang==='es'?'La evidencia original se muestra aparte de la interpretación canónica de PactWorks.':'Original evidence is shown separately from PactWorks’ canonical interpretation.')}</p></div></div><div class="interpretation-note">${esc(state.lang==='es'?'Arriba: historial canónico para navegar rápido. Abajo: texto y registro importado original para verificar la fuente de verdad.':'Above: canonical history for fast navigation. Below: the original imported text and record so you can verify the source of truth.')}</div>${prov.length?`<div class="evidence-stack">${prov.map(renderSourceEvidence).join('')}</div>`:`<div class="sub">${esc(t('noProvenance'))}</div>`}</div></aside></div>`}
+function renderHistory(h){const exact=h.event_date&&h.date_precision==='day';const label=exact?t('exactEventDate'):t('evidenceDate');const date=exact?fmtDateOnly(h.event_date):fmtDate(h.occurred_at);return `<article class="timeline-item"><div class="timeline-date">${esc(label)} • ${esc(date)}</div><h4>${esc(h.title||h.event_type||'Relationship event')}</h4><p>${esc(h.event_type||'')}</p>${h.body?`<p>${esc(h.body)}</p>`:''}<div class="person-meta"><span class="badge muted">${esc(h.source_type||'manual')}</span>${!exact?`<span class="badge warn">${esc(state.lang==='es'?'Fecha del evento no confirmada':'Event date not confirmed')}</span>`:''}</div></article>`}
+function showFatal(e){console.error(e);$('#main').innerHTML=`<div class="notice bad"><b>PactWorks:</b> ${esc(e?.message||String(e))}</div>`}
+
+async function signInWithPassword(){const email=$('#emailInput').value.trim(),password=$('#passwordInput').value;if(!email||!password)return setAuthMessage('Enter your email and password.',true);$('#signInBtn').disabled=true;try{const {error}=await db.auth.signInWithPassword({email,password});if(error)throw error}catch(e){setAuthMessage(friendlyAuthError(e),true)}finally{$('#signInBtn').disabled=false}}
+async function sendMagicLink(){const email=$('#emailInput').value.trim();if(!email)return setAuthMessage('Enter your email first.',true);$('#magicLinkBtn').disabled=true;try{const {error}=await db.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:window.location.origin}});if(error)throw error;setAuthMessage('Sign-in link sent. Check your email and use the newest link.')}catch(e){setAuthMessage(friendlyAuthError(e),true)}finally{$('#magicLinkBtn').disabled=false}}
+async function sendPasswordReset(){const email=$('#emailInput').value.trim();if(!email)return setAuthMessage('Enter your email first.',true);$('#forgotPasswordBtn').disabled=true;try{const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin});if(error)throw error;setAuthMessage('Password-reset email sent. Check your inbox and use the newest reset link.')}catch(e){setAuthMessage(friendlyAuthError(e),true)}finally{$('#forgotPasswordBtn').disabled=false}}
+async function saveRecoveredPassword(){const p=$('#newPasswordInput').value,c=$('#confirmPasswordInput').value;if(!p||!c)return setResetMessage('Enter and confirm the new password.',true);if(p!==c)return setResetMessage('The two passwords do not match.',true);$('#savePasswordBtn').disabled=true;try{const {error}=await db.auth.updateUser({password:p});if(error)throw error;setResetMessage('Password updated successfully. Opening PactWorks…');history.replaceState({},document.title,window.location.pathname);recoveryMode=false;setTimeout(()=>enterApp(),650)}catch(e){setResetMessage(friendlyAuthError(e),true)}finally{$('#savePasswordBtn').disabled=false}}
+function setResetMessage(msg,bad=false){const el=$('#resetMessage');el.textContent=msg;el.className='notice '+(bad?'bad':'good');el.classList.remove('hidden')}
+$('#signInBtn').onclick=signInWithPassword;$('#passwordInput').addEventListener('keydown',e=>{if(e.key==='Enter')signInWithPassword()});$('#magicLinkBtn').onclick=sendMagicLink;$('#forgotPasswordBtn').onclick=sendPasswordReset;$('#savePasswordBtn').onclick=saveRecoveredPassword;$('#backToLoginBtn').onclick=async()=>{recoveryMode=false;await db.auth.signOut();showAuth()};
+$('#logoutBtn').onclick=()=>db.auth.signOut();$('#refreshBtn').onclick=refreshAll;$('#langBtn').onclick=async()=>{state.lang=state.lang==='en'?'es':'en';localStorage.setItem('pw45g1_lang',state.lang);applyStaticTranslations();if(state.page==='relationships')await loadPeople();render()};
+$('#nav').onclick=async e=>{const b=e.target.closest('button[data-page]');if(!b)return;state.page=b.dataset.page;document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x===b));if(state.page==='relationships'&&!state.people.length)await loadPeople();render()};
+
+init().catch(e=>{showAuth();setAuthMessage(e.message||String(e),true)});
+</script>
+</body>
+</html>
