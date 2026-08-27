@@ -1,0 +1,2 @@
+PactWorks v4.5D9E
+Dashboard Customer Website control; simplified navigation; quote-only default; advanced scheduling enabled from Dashboard. No database changes.

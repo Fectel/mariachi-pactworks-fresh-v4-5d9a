@@ -1,0 +1,23 @@
+{
+  "product": "Mariachi Hermanos Azteca PactWorks",
+  "release": "v4.5D9F",
+  "public_splash": "Spanish-first pyramid splash",
+  "splash_sha256": "9e04df3d810320f3fc8b5a7ebfab8e087523de55a71a276faeafa0c4e8419337",
+  "pricing_fix": "bottom unlock CTA opens verification; default promo cards replaced with reservation facts",
+  "connected_services_gate": "Supabase email magic-link + Google OAuth implementation; SMS disabled pending provider; live diagnostics page",
+  "auth_pricing_fix": "pricing crash fixed; Supabase auth unlock independent of request API; email/Google return to /pricing/",
+  "pricing_readability": "larger typography, icon-first booking facts, shorter copy, compact rules",
+  "booking_flow": "package -> availability -> location -> event details -> review; inline CTA; map fallback",
+  "booking_workspace": "browse selection collapses; booking uses legacy date/time plus full package catalog",
+  "mobile_booking": "dense calendar/time controls; horizontal package selector; sticky selected package and actions",
+  "customer_booking_donor": "admin Schedule & Quotes: date -> time -> opening -> eligible pricing",
+  "public_inquiry": "simple bilingual quick quote + advanced Schedule & Quotes",
+  "public_availability": "quote-only default; scheduling enabled from Dashboard",
+  "runtime_regression_fix": "stale optional public-booking handlers can no longer crash pricing startup",
+  "quote_time": "basic inquiry now includes optional preferred time",
+  "quote_event_type_fix": "explicit event-type label; missing selection safely falls back to Other",
+  "customer_booking_admin": "simple booking mode card with quote-only default",
+  "quote_form": "simple guided dropdown intake: event type, duration, date, time",
+  "admin_cleanup": "Dashboard Customer Website control + simplified primary navigation",
+  "admin_customer_website_fix": "dashboard booking-mode, save, status and preview handlers reliably bind"
+}
