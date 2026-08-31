@@ -1,0 +1,18 @@
+PactWorks v4.5D9I
+
+Selecting a price:
+- stays on the same pricing screen
+- does not collapse any other prices
+- does not scroll or jump
+- highlights the selected mariachi group
+- highlights the selected duration
+- reveals Quote + Check Availability directly beneath that selected duration
+- leaves every other option visible and clickable
+
+Removed:
+- redundant selected-package summary box
+- redundant bottom availability CTA
+
+Check Availability continues directly to the scheduling/calendar workflow when enabled.
+
+No database changes.
