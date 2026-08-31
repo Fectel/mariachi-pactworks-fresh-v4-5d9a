@@ -1,9 +1,0 @@
-PactWorks v4.5D9H
-- Selecting a package no longer collapses the price catalog.
-- Selected package is highlighted instead.
-- Redundant lower Check Availability CTA removed.
-- Package-level Quote and Check Availability remain.
-- Check Availability opens Schedule & Quotes directly.
-- Quote still opens simple inquiry.
-- If scheduling is OFF, availability falls back to Quote.
-No database changes.

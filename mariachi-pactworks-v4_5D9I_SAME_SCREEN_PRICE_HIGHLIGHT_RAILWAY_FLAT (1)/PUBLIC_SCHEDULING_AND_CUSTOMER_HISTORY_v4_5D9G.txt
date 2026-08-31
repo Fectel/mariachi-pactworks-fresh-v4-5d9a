@@ -1,8 +1,0 @@
-PactWorks v4.5D9G
-Scheduling propagation fixed across open same-origin tabs.
-Returning verified customers get My Requests / Mis solicitudes.
-Quick quotes and advanced requests are preserved separately from the admin import queue.
-Exact duplicate active quick quotes are detected.
-Same-browser admin status changes sync to customer history.
-Cross-device/global history still requires the configured hosted public API or a future durable customer portal backend.
-No database changes.
