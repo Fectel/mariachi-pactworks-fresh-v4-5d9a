@@ -1,0 +1,17 @@
+PactWorks v4.5D9N
+Payments:
+- Admin $100 deposit preset.
+- Customer $100 payment option.
+- Customer-facing payment method is Zelle only.
+- Stripe/card removed from customer signing page and exported customer payload.
+- Customer is told to text Zelle screenshot to business phone.
+- Payment remains unverified until admin checks Zelle/bank.
+
+Scheduling:
+- Customer Check Availability opens calendar without an auth wall.
+- Uses the admin Schedule & Quote interaction pattern with public-safe data only.
+- Shows date, 15-minute times, blocked/reserved slots, minimum/maximum opening, eligible packages.
+- No private notes, internal overrides, payment verification, private customer data, or admin controls.
+- Friday/Saturday 5–8 PM 2-hour minimum; Sunday normal.
+
+No database changes.
