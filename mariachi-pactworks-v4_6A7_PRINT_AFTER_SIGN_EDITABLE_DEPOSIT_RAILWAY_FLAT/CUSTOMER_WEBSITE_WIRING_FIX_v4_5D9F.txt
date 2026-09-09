@@ -1,0 +1,13 @@
+PactWorks v4.5D9F
+
+FIXED:
+- Dashboard booking-mode dropdown now updates Scheduling status immediately.
+- Save Customer Website now persists booking mode and republishes public config.
+- Preview Website now opens /pricing/.
+- Dashboard handlers are rebound safely whenever Dashboard renders.
+
+Default remains:
+Quote / Inquiry only
+Advanced scheduling OFF
+
+No database changes.

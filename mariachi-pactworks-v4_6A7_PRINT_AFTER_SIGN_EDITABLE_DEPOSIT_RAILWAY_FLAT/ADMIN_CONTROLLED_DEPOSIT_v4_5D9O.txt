@@ -1,0 +1,15 @@
+PactWorks v4.5D9O
+
+DEPOSIT CONTROL CORRECTION
+
+- $100 remains available as an ADMIN deposit preset.
+- The customer does NOT always see a permanent $100 payment choice.
+- The customer sees the required deposit amount that the admin set for that booking.
+- Example:
+  Admin sets deposit = $100 -> customer sees Pay required deposit $100.
+  Admin sets deposit = $200 -> customer sees Pay required deposit $200.
+  Admin sets another amount -> customer sees that amount.
+- Pay in full remains available.
+- Existing custom-payment control remains bounded by the required deposit.
+- Zelle-only customer payment flow remains unchanged.
+- No database changes.
