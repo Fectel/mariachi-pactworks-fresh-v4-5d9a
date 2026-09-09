@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mariachi Hermanos Azteca — Review & Sign</title>
+<style>
+:root{--burg:#691628;--gold:#ad7b24;--line:#ded7cc;--soft:#f6f2ec;--ok:#176b43}
+*{box-sizing:border-box}body{margin:0;background:var(--soft);font-family:Arial,sans-serif;color:#221d1b}
+.wrap{max-width:900px;margin:auto;padding:18px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:14px}
+.hero{text-align:center;border-top:6px solid var(--burg)}h1,h2{color:var(--burg)}.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.fact{padding:10px;border:1px solid #eee;border-radius:10px}.fact span{display:block;font-size:11px;color:#6c625b}.fact b{display:block;margin-top:4px}
+.money{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;background:#fff8e8;border:1px solid #e6cf99;padding:14px;border-radius:12px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 15px;font-weight:800;cursor:pointer}.primary{background:var(--burg);border-color:var(--burg);color:white}.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn:disabled{opacity:.55;cursor:wait}.notice{padding:12px;border-radius:10px;background:#fff8e8;border:1px solid #e3c982}.good{background:#edf8f2;border-color:#b9ddc8;color:#15543a}.bad{background:#fff0f0;border-color:#e3bcbc;color:#7e1a1a}
+label{display:block;margin:10px 0;font-weight:700}input[type=text]{width:100%;padding:12px;border:1px solid #bbb;border-radius:10px}
+canvas{width:100%;height:170px;background:#fff;border:1px solid #aaa;border-radius:10px;touch-action:none}.hidden{display:none!important}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.terms{white-space:pre-wrap;line-height:1.5;font-size:13px;max-height:340px;overflow:auto;border:1px solid #eee;border-radius:10px;padding:12px}
+@media(max-width:620px){.facts,.money{grid-template-columns:1fr}.wrap{padding:10px}.card{padding:16px}}
+</style></head><body><main class="wrap">
+<section class="card hero"><h1>Mariachi Hermanos Azteca</h1><p>Secure contract review and signing</p><div id="status">Loading contract…</div></section>
+<section class="card hidden" id="contractCard"><h2>Review your contract</h2><div id="facts" class="facts"></div><div id="money" class="money"></div><h3>Terms</h3><div id="terms" class="terms"></div></section>
+<section class="card hidden" id="signCard"><h2>Accept and sign</h2>
+<label><input type="checkbox" id="agree1"> I reviewed the event details, price, deposit, and remaining balance.</label>
+<label><input type="checkbox" id="agree2"> I accept the contract terms and payment conditions.</label>
+<label><input type="checkbox" id="agree3"> I understand the date is reserved only after the required deposit is verified.</label>
+<label>Legal name<input id="legalName" type="text" autocomplete="name"></label>
+<label>Draw signature <span style="font-weight:400">(optional — legal-name acceptance is recorded either way)</span></label>
+<canvas id="sig" width="800" height="220"></canvas><div class="actions"><button class="btn" id="clearSig">Clear</button><button class="btn primary" id="signBtn">Accept & sign contract</button></div><div id="signNotice"></div>
+</section>
+<section class="card hidden" id="payCard"><h2>Zelle payment</h2><div id="zelle"></div>
+<div class="actions"><button class="btn gold" id="depositBtn">I sent the required deposit</button><button class="btn" id="fullBtn">I paid in full</button></div>
+<label>Zelle confirmation/reference <span style="font-weight:400">(optional)</span><input id="reference" type="text"></label>
+<div id="payNotice"></div></section>
+</main>
+<script>
+'use strict';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n||0));
+const token=decodeURIComponent(location.pathname.split('/').filter(Boolean)[1]||'');let hosted=null;
+const canvas=$('#sig'),ctx=canvas.getContext('2d');ctx.lineWidth=3;ctx.lineCap='round';let draw=false,ink=false;
+function pos(e){const r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)*(canvas.width/r.width),y:(p.clientY-r.top)*(canvas.height/r.height)}}
+function start(e){draw=true;let p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()}function move(e){if(!draw)return;let p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();ink=true;e.preventDefault()}function end(e){draw=false;e.preventDefault()}
+['mousedown','touchstart'].forEach(x=>canvas.addEventListener(x,start,{passive:false}));['mousemove','touchmove'].forEach(x=>canvas.addEventListener(x,move,{passive:false}));['mouseup','mouseleave','touchend'].forEach(x=>canvas.addEventListener(x,end,{passive:false}));$('#clearSig').onclick=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);ink=false};
+async function api(path,options={}){const r=await fetch(path,{...options,headers:{'content-type':'application/json',...(options.headers||{})}});const d=await r.json();if(!r.ok)throw Error(d.error||'Request failed');return d}
+function render(){
+ const p=hosted.contract||{},a=p.agreement||{},b=p.business||{};
+ $('#status').innerHTML=`<b>${esc(hosted.status==='confirmed'?'Confirmed':'Contract '+hosted.contractExternalId)}</b>`;
+ $('#facts').innerHTML=[
+ ['Client',p.client?.name],['Event',a.eventType],['Date',a.date],['Time',a.time],['Package',a.packageName||a.duration],['Location',a.location]
+ ].map(([k,v])=>`<div class="fact"><span>${k}</span><b>${esc(v||'—')}</b></div>`).join('');
+ $('#money').innerHTML=`<div><small>Total</small><br><b>${money(a.total)}</b></div><div><small>Required deposit</small><br><b>${money(a.deposit)}</b></div><div><small>Remaining after deposit</small><br><b>${money(a.balance)}</b></div>`;
+ $('#terms').textContent=a.terms||'';
+ $('#contractCard').classList.remove('hidden');
+ if(!hosted.signedAt)$('#signCard').classList.remove('hidden');else $('#signCard').classList.add('hidden');
+ if(hosted.signedAt)showPay();
+}
+function showPay(){
+ $('#payCard').classList.remove('hidden');const z=hosted.zelle||{};
+ const phone=z.receiptPhone||'';
+ $('#zelle').innerHTML=`<div class="notice"><b>Send payment through Zelle</b><br>Recipient: ${esc(z.name||'Mariachi Hermanos Azteca')}<br>Zelle: ${esc(z.handle||'Contact the mariachi for Zelle instructions')}<br>${esc(z.memo||'')}</div>${phone?`<div class="notice good" style="margin-top:10px"><b>After paying:</b> take a screenshot of the Zelle confirmation and text it to <b>${esc(phone)}</b>.<br><a class="btn gold" style="margin-top:8px;display:inline-block;text-decoration:none" href="sms:${esc(phone.replace(/[^0-9+]/g,''))}">Text screenshot</a></div>`:''}`;
+ $('#depositBtn').textContent='I sent '+money(hosted.contract?.agreement?.deposit)+' required deposit';
+ $('#fullBtn').textContent='I paid '+money(hosted.contract?.agreement?.total)+' in full';
+ if(hosted.paymentStatus==='client_declared_sent'){$('#payNotice').innerHTML='<div class="notice good">✓ Payment marked as sent. The mariachi will verify it in Zelle/bank records before your date becomes reserved.</div>';$('#depositBtn').disabled=$('#fullBtn').disabled=true}
+ if(hosted.paymentStatus==='verified'){$('#payNotice').innerHTML='<div class="notice good">✓ Payment verified. Your booking is reserved.</div>';$('#depositBtn').disabled=$('#fullBtn').disabled=true}
+}
+$('#signBtn').onclick=async()=>{
+ if(!['agree1','agree2','agree3'].every(id=>$('#'+id).checked))return $('#signNotice').innerHTML='<div class="notice bad">Please accept all three statements.</div>';
+ const legalName=$('#legalName').value.trim();if(!legalName)return $('#signNotice').innerHTML='<div class="notice bad">Enter your legal name.</div>';
+ const b=$('#signBtn');b.disabled=true;b.textContent='Signing…';
+ try{const d=await api('/api/hosted-contracts/token/'+encodeURIComponent(token)+'/sign',{method:'POST',body:JSON.stringify({accepted:true,legalName,signatureDataUrl:ink?canvas.toDataURL('image/png'):'',statements:['details-price-deposit','terms-payment','deposit-verification']})});hosted=d.hosted;$('#signNotice').innerHTML='<div class="notice good">✓ Contract signed successfully.</div>';render()}
+ catch(e){$('#signNotice').innerHTML='<div class="notice bad">'+esc(e.message)+'</div>'}
+ finally{b.disabled=false;b.textContent='Accept & sign contract'}
+};
+async function declare(choice,btn){
+ btn.disabled=true;const original=btn.textContent;btn.textContent='Saving…';
+ try{const d=await api('/api/hosted-contracts/token/'+encodeURIComponent(token)+'/declare-zelle',{method:'POST',body:JSON.stringify({choice,reference:$('#reference').value.trim()})});hosted=d.hosted;showPay()}
+ catch(e){$('#payNotice').innerHTML='<div class="notice bad">'+esc(e.message)+'</div>'}
+ finally{if(hosted?.paymentStatus!=='client_declared_sent'){btn.disabled=false;btn.textContent=original}}
+}
+$('#depositBtn').onclick=()=>declare('deposit',$('#depositBtn'));$('#fullBtn').onclick=()=>declare('full',$('#fullBtn'));
+(async()=>{try{const d=await api('/api/hosted-contracts/token/'+encodeURIComponent(token));hosted=d.hosted;render()}catch(e){$('#status').innerHTML='<div class="notice bad">'+esc(e.message)+'</div>'}})();
+</script></body></html>
