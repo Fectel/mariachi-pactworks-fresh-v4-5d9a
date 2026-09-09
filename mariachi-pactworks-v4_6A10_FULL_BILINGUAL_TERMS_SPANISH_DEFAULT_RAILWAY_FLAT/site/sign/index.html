@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mariachi Hermanos Azteca — Revisar y firmar</title>
+<style>
+:root{--burg:#691628;--gold:#ad7b24;--line:#ded7cc;--soft:#f6f2ec;--ok:#176b43}
+*{box-sizing:border-box}body{margin:0;background:var(--soft);font-family:Arial,sans-serif;color:#221d1b}
+.wrap{max-width:900px;margin:auto;padding:18px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:14px}
+.hero{text-align:center;border-top:6px solid var(--burg)}h1,h2{color:var(--burg)}.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.fact{padding:10px;border:1px solid #eee;border-radius:10px}.fact span{display:block;font-size:11px;color:#6c625b}.fact b{display:block;margin-top:4px}
+.money{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;background:#fff8e8;border:1px solid #e6cf99;padding:14px;border-radius:12px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 15px;font-weight:800;cursor:pointer}.primary{background:var(--burg);border-color:var(--burg);color:white}.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn:disabled{opacity:.55;cursor:wait}.notice{padding:12px;border-radius:10px;background:#fff8e8;border:1px solid #e3c982}.good{background:#edf8f2;border-color:#b9ddc8;color:#15543a}.bad{background:#fff0f0;border-color:#e3bcbc;color:#7e1a1a}
+label{display:block;margin:10px 0;font-weight:700}input[type=text]{width:100%;padding:12px;border:1px solid #bbb;border-radius:10px}
+canvas{width:100%;height:170px;background:#fff;border:1px solid #aaa;border-radius:10px;touch-action:none}.hidden{display:none!important}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.terms{white-space:pre-wrap;line-height:1.5;font-size:13px;max-height:340px;overflow:auto;border:1px solid #eee;border-radius:10px;padding:12px}
+.help{font-size:12px;color:#6b625c;line-height:1.45}.step-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.guide{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.guide div{padding:11px;border:1px solid #eadfc9;border-radius:12px;background:#fffdf8}.guide b{display:block;color:var(--burg);margin-bottom:4px}
+.consent-row{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;margin:9px 0;padding:10px 11px;border:1px solid #e2d8c9;border-radius:11px;background:#fffdf8;font-weight:600;line-height:1.35}.consent-row input{width:20px;height:20px;margin:0}
+.payment-box{margin-top:12px;padding:14px;border:1px solid #dcccae;border-radius:14px;background:#fffdf8}.payment-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.payment-value{font-size:24px;font-weight:900;color:var(--burg)}
+.payment-slider-row{display:grid;grid-template-columns:1fr 130px;gap:12px;align-items:center;margin-top:10px}input[type=range]{width:100%;accent-color:var(--burg)}input[type=number]{width:100%;padding:10px;border:1px solid #bbb;border-radius:10px}.range-labels{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#6b625c;margin-top:4px}
+.quick-amounts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.quick-amounts .btn.active{background:#fff3d6;border-color:var(--gold);color:#5b3a00}
+.zelle-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:10px;margin-top:12px}.zelle-instructions{padding:14px;border:1px solid #ead09b;background:#fff9ea;border-radius:12px}.screenshot-step{padding:14px;border:1px solid #bddfcb;background:#edf8f2;border-radius:12px;color:#15543a}.big-callout{font-size:16px;line-height:1.45}
+.reserve-warning{margin-top:10px;padding:11px;border:1px solid #e4bcbc;background:#fff3f3;border-radius:10px;color:#7a1818;font-size:12px;line-height:1.45}
+@media(max-width:620px){.facts,.money,.guide,.zelle-grid{grid-template-columns:1fr}.payment-slider-row{grid-template-columns:1fr}.wrap{padding:10px}.card{padding:16px}}
+@media print{
+  body{background:#fff!important;color:#000}
+  .wrap{max-width:none;padding:0}
+  .card{box-shadow:none;border:1px solid #bbb;break-inside:avoid;margin:0 0 14px}
+  #payCard .payment-box,#payCard .actions,#payCard .quick-amounts,#payCard input,#payCard button,#printContractBtn,.signature-canvas-shell,.reserve-warning{display:none!important}
+  #signCard button,#signCard canvas{display:none!important}
+  .notice,.zelle-instructions,.screenshot-step{background:#fff!important;border-color:#bbb!important;color:#000!important}
+  .terms{max-height:none;overflow:visible}
+  header{position:static!important}
+  a{text-decoration:none;color:#000}
+}
+
+.lang-modal{position:fixed;inset:0;background:rgba(39,18,12,.72);display:flex;align-items:center;justify-content:center;padding:18px;z-index:9999}
+.lang-modal.hidden{display:none}
+.lang-box{width:min(420px,100%);background:#fffaf3;border:1px solid #eadfc9;border-radius:18px;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.28);text-align:center}
+.lang-box h2{margin:0 0 8px;color:var(--burg)}
+.lang-box p{margin:0 0 16px;color:#6b625c;line-height:1.45}
+.lang-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lang-actions button{font-size:16px;padding:13px 12px}
+.lang-switch{display:flex;gap:8px;justify-content:flex-end;margin-bottom:10px}
+.lang-switch .btn{padding:7px 10px;font-size:12px}
+@media(max-width:460px){.lang-actions{grid-template-columns:1fr}}
+
+</style></head><body>
+<div class="lang-modal" id="languageModal">
+  <div class="lang-box">
+    <h2>Idioma / Language</h2>
+    <p>Elige tu idioma preferido.<br><span style="font-size:12px">Choose your preferred language.</span></p>
+    <div class="lang-actions">
+      <button class="btn gold" id="chooseEs">🇲🇽 Español</button>
+      <button class="btn" id="chooseEn">🇺🇸 English</button>
+    </div>
+    <div class="help" style="margin-top:12px">Español es el idioma predeterminado.</div>
+  </div>
+</div>
+<main class="wrap">
+<div class="lang-switch">
+  <button class="btn" id="switchEs">🇲🇽 Español</button>
+  <button class="btn" id="switchEn">🇺🇸 English</button>
+</div>
+
+<section class="card hero"><h1>Mariachi Hermanos Azteca</h1><p>Contrato seguro para revisar y firmar</p><div id="status">Cargando contrato…</div></section>
+<section class="card hidden" id="contractCard"><div class="step-kicker">Paso 1 de 3</div><h2>Revisa tu contrato</h2><div class="notice"><b>Antes de firmar:</b> confirma la fecha, hora, ubicación, paquete, total y depósito requerido.</div><div id="facts" class="facts" style="margin-top:12px"></div><div id="money" class="money" style="margin-top:12px"></div><div class="guide"><div><b>1. Review & sign</b>Your signature accepts this exact contract version.</div><div><b>2. Choose Zelle amount</b>You may send the required deposit, more than the deposit, or pay in full.</div><div><b>3. Text screenshot</b>After Zelle, text the confirmation screenshot to the business phone.</div></div><h3 id="termsHeading">Términos y condiciones</h3><div id="terms" class="terms"></div></section>
+<section class="card hidden" id="signCard"><div class="step-kicker">Paso 2 de 3</div><h2>Acepta y firma</h2>
+<div class="notice"><b>Tu fecha todavía no está reservada.</b> Firmar acepta el acuerdo. La reservación ocurre solamente después de que Mariachi Hermanos Azteca verifique el pago requerido por Zelle.</div>
+<label class="consent-row"><input type="checkbox" id="agree1"><span>Revisé los detalles del evento, precio, depósito y saldo restante.</span></label>
+<label class="consent-row"><input type="checkbox" id="agree2"><span>Acepto los términos del contrato y las condiciones de pago.</span></label>
+<label class="consent-row"><input type="checkbox" id="agree3"><span>Entiendo que la fecha se reserva solamente después de verificar el depósito requerido.</span></label>
+<label>Nombre legal<input id="legalName" type="text" autocomplete="name"></label>
+<label>Dibuja tu firma <span style="font-weight:400">(opcional — la aceptación con tu nombre legal se registra de cualquier manera)</span></label>
+<canvas id="sig" width="800" height="220"></canvas><div class="actions"><button class="btn" id="clearSig">Borrar</button><button class="btn primary" id="signBtn">Aceptar y firmar contrato</button></div><div id="signNotice"></div>
+</section>
+<section class="card hidden" id="payCard"><div class="step-kicker">Paso 3 de 3</div><h2>Elige y completa tu pago por Zelle</h2>
+<div class="notice"><b>Elige cuánto quieres enviar.</b> El control no puede bajar del depósito requerido. Puedes pagar más ahora para reducir el saldo restante o pagar el contrato completo.</div>
+<div class="payment-box">
+  <div class="payment-head"><div><b>Cantidad a enviar por Zelle</b><div class="help">Mínimo = depósito requerido • Máximo = total del contrato</div></div><div class="payment-value" id="paymentValue">$0.00</div></div>
+  <div class="payment-slider-row"><div><input id="paymentSlider" type="range"><div class="range-labels"><span id="minLabel"></span><span id="maxLabel"></span></div></div><input id="paymentAmount" type="number" step="1" inputmode="decimal"></div>
+  <div class="quick-amounts"><button class="btn" id="depositQuick">Depósito requerido</button><button class="btn" id="fullQuick">Pagar todo</button></div>
+</div>
+<div id="zelle"></div>
+<label>Confirmación/referencia de Zelle <span style="font-weight:400">(opcional)</span><input id="reference" type="text" placeholder="Número de confirmación, nota o últimos 4 dígitos"></label>
+<div class="actions"><button class="btn gold" id="sentBtn">Envié este pago por Zelle</button></div>
+<div class="reserve-warning"><b>Importante:</b> este botón solamente nos informa que enviaste el pago. Una captura o número de confirmación no reserva automáticamente la fecha. Mariachi Hermanos Azteca debe verificar el pago real en la cuenta vinculada a Zelle.</div>
+<div id="payNotice"></div></section>
+<section class="card hidden" id="printCard">
+  <div class="step-kicker">Tu copia del contrato</div>
+  <div class="payment-head">
+    <div>
+      <h2 style="margin:0">Guarda o imprime este contrato</h2>
+      <div class="help" id="printHelp">Guarda una copia para tus archivos.</div>
+    </div>
+    <button class="btn gold" id="printContractBtn">📄 Imprimir / Guardar contrato firmado</button>
+  </div>
+  <div id="contractStateSummary" class="notice" style="margin-top:12px"></div>
+</section>
+</main>
+<script>
+'use strict';
+
+const LANG_KEY='mha-hosted-contract-language-v1';
+let lang=localStorage.getItem(LANG_KEY)||'es';
+const I18N={
+ es:{
+  secure:'Contrato seguro para revisar y firmar', loading:'Cargando contrato…', confirmed:'Confirmado', contract:'Contrato', client:'Cliente', event:'Evento', date:'Fecha', time:'Hora', package:'Paquete', location:'Ubicación', total:'Total', remainingAfterDeposit:'Saldo después del depósito', termsHeading:'Términos y condiciones',
+  reviewStep:'Paso 1 de 3', reviewTitle:'Revisa tu contrato',
+  beforeSign:'Antes de firmar:', beforeSignBody:'confirma la fecha, hora, ubicación, paquete, total y depósito requerido.',
+  guide1:'1. Revisa y firma',guide1b:'Tu firma acepta esta versión exacta del contrato.',
+  guide2:'2. Elige cuánto pagar por Zelle',guide2b:'Puedes enviar el depósito requerido, más del depósito, o pagar todo.',
+  guide3:'3. Envía la captura',guide3b:'Después de pagar por Zelle, manda la captura de confirmación al teléfono del negocio.',
+  terms:'Términos',
+  signStep:'Paso 2 de 3',signTitle:'Acepta y firma',
+  notReserved:'Tu fecha todavía no está reservada.', notReservedBody:'Firmar acepta el acuerdo. La reservación ocurre solamente después de que Mariachi Hermanos Azteca verifique el pago requerido por Zelle.',
+  agree1:'Revisé los detalles del evento, precio, depósito y saldo restante.',
+  agree2:'Acepto los términos del contrato y las condiciones de pago.',
+  agree3:'Entiendo que la fecha se reserva solamente después de verificar el depósito requerido.',
+  legalName:'Nombre legal',
+  draw:'Dibuja tu firma (opcional — la aceptación legal se registra de cualquier manera)',
+  clear:'Borrar', accept:'Aceptar y firmar contrato',
+  payStep:'Paso 3 de 3',payTitle:'Elige y completa tu pago por Zelle',
+  chooseAmount:'Elige cuánto quieres enviar.',chooseAmountBody:'El control no puede bajar del depósito requerido. Puedes pagar más ahora para reducir el saldo o pagar el contrato completo.',
+  amountSend:'Cantidad a enviar por Zelle', minmax:'Mínimo = depósito requerido • Máximo = total del contrato',
+  reqDeposit:'Depósito requerido',payFull:'Pagar todo',
+  reference:'Confirmación/referencia de Zelle',optional:'opcional', amountLabel:'Cantidad a enviar por Zelle', amountHelp:'Mínimo = depósito requerido • Máximo = total del contrato', important:'Importante:',
+  sentBtn:'Envié este pago por Zelle',
+  important:'Importante:', importantBody:'este botón solamente nos informa que enviaste el pago. Una captura o número de confirmación no reserva automáticamente la fecha. Mariachi Hermanos Azteca debe verificar el pago real en la cuenta vinculada a Zelle.',
+  copyStep:'Tu copia del contrato',saveTitle:'Guarda o imprime este contrato',saveHelp:'Guarda una copia para tus archivos.',
+  print:'📄 Imprimir / Guardar contrato firmado',
+  status:'Estado:', payment:'Pago en este contrato:', remaining:'Saldo restante:', verification:'Verificación del pago:',reservation:'Reservación:',
+  awaitingSig:'Esperando firma',signedPending:'Firmado — pago pendiente',sentAwaiting:'Firmado — pago enviado, esperando verificación',
+  fullyPaid:'Pagado por completo',reserved:'Reservado',notYetReserved:'Todavía no reservado',
+  verified:'Verificado por Mariachi Hermanos Azteca',awaitingVerification:'Esperando verificación del negocio',
+  sendThrough:'Envía {amount} por Zelle',recipient:'Destinatario',zelleHandle:'Zelle correo/teléfono',
+  afterPay:'Después de pagar, toma una captura.',textScreenshot:'Envía por texto la captura de Zelle',
+  evidenceOnly:'La captura es solamente evidencia. Todavía verificamos el pago real antes de reservar la fecha.',
+  sentMarked:'✓ Marcaste el pago de Zelle como enviado. Asegúrate de enviar también la captura. Verificaremos el pago real antes de reservar la fecha.',
+  paymentVerified:'✓ Pago verificado por Mariachi Hermanos Azteca. Tu reservación está confirmada.',
+  currentStatus:'Estado actual: {state}. Usa la opción de imprimir del navegador y elige “Guardar como PDF” si quieres una copia digital.'
+ },
+ en:{
+  secure:'Contrato seguro para revisar y firmar', loading:'Cargando contrato…', confirmed:'Confirmado', contract:'Contrato', client:'Cliente', event:'Evento', date:'Fecha', time:'Hora', package:'Paquete', location:'Ubicación', total:'Total', remainingAfterDeposit:'Saldo después del depósito', termsHeading:'Términos y condiciones',
+  reviewStep:'Step 1 of 3', reviewTitle:'Review your contract',
+  beforeSign:'Before you sign:', beforeSignBody:'confirm the event date, start time, location, package, total, and required deposit below.',
+  guide1:'1. Review & sign',guide1b:'Your signature accepts this exact contract version.',
+  guide2:'2. Choose Zelle amount',guide2b:'You may send the required deposit, more than the deposit, or pay in full.',
+  guide3:'3. Text screenshot',guide3b:'After Zelle, text the confirmation screenshot to the business phone.',
+  terms:'Terms',
+  signStep:'Step 2 of 3',signTitle:'Accept and sign',
+  notReserved:'Your date is not reserved yet.',notReservedBody:'Signing accepts the agreement. Reservation happens only after Mariachi Hermanos Azteca verifies the required Zelle payment.',
+  agree1:'Revisé los detalles del evento, precio, depósito y saldo restante.',
+  agree2:'Acepto los términos del contrato y las condiciones de pago.',
+  agree3:'Entiendo que la fecha se reserva solamente después de verificar el depósito requerido.',
+  legalName:'Legal name',
+  draw:'Draw signature (optional — legal acceptance is recorded either way)',
+  clear:'Clear',accept:'Accept & sign contract',
+  payStep:'Step 3 of 3',payTitle:'Choose and complete Zelle payment',
+  chooseAmount:'Choose how much you want to send.',chooseAmountBody:'The slider cannot go below the required deposit set by the mariachi. You can pay more now to reduce your remaining balance, or pay the contract in full.',
+  amountSend:'Amount to send through Zelle',minmax:'Minimum = required deposit • Maximum = full contract amount',
+  reqDeposit:'Required deposit',payFull:'Pay in full',
+  reference:'Zelle confirmation/reference',optional:'optional', amountLabel:'Amount to send through Zelle', amountHelp:'Minimum = required deposit • Maximum = full contract amount', important:'Important:',
+  sentBtn:'I sent this Zelle payment',
+  important:'Important:',importantBody:'pressing this button only tells us you sent the payment. A screenshot or confirmation number does not automatically reserve the date. Mariachi Hermanos Azteca must verify the payment in the Zelle-linked bank account first.',
+  copyStep:'Your contract copy',saveTitle:'Save or print this contract',saveHelp:'Guarda una copia para tus archivos.',
+  print:'📄 Print / Save Signed Contract',
+  status:'Status:',payment:'Payment on this hosted contract:',remaining:'Remaining contract amount:',verification:'Payment verification:',reservation:'Reservation:',
+  awaitingSig:'Awaiting signature',signedPending:'Signed — payment pending',sentAwaiting:'Signed — payment sent, awaiting verification',
+  fullyPaid:'Fully paid',reserved:'Reserved',notYetReserved:'Not yet reserved',
+  verified:'Verified by Mariachi Hermanos Azteca',awaitingVerification:'Awaiting business verification',
+  sendThrough:'Send {amount} through Zelle',recipient:'Recipient',zelleHandle:'Zelle email/phone',
+  afterPay:'After you pay, take a screenshot.',textScreenshot:'Text Zelle screenshot',
+  evidenceOnly:'The screenshot is evidence only. We still verify the actual payment before reserving the date.',
+  sentMarked:'✓ You marked the Zelle payment as sent. Please make sure you also texted the screenshot. We will verify the actual payment before the date becomes reserved.',
+  paymentVerified:'✓ Payment verified by Mariachi Hermanos Azteca. Your booking is reserved.',
+  currentStatus:'Current status: {state}. Use your browser print dialog and choose “Save as PDF” for a digital copy.'
+ }
+};
+const tr=(k,vars={})=>{
+ let s=(I18N[lang]&&I18N[lang][k])||I18N.es[k]||k;
+ for(const [a,b] of Object.entries(vars))s=s.replaceAll('{'+a+'}',String(b));
+ return s
+};
+function setLang(next,remember=true){
+ lang=next==='en'?'en':'es';
+ if(remember)localStorage.setItem(LANG_KEY,lang);
+ document.documentElement.lang=lang;
+ applyLanguage();
+}
+function applyLanguage(){
+ const modal=document.getElementById('languageModal');
+ if(modal && localStorage.getItem(LANG_KEY))modal.classList.add('hidden');
+ const text=(sel,key)=>{const el=document.querySelector(sel);if(el)el.textContent=tr(key)};
+ document.title='Mariachi Hermanos Azteca — '+(lang==='es'?'Revisar y firmar':'Review & Sign');
+ text('header .help','secure'); text('#contractCard .step-kicker','reviewStep'); text('#contractCard h2','reviewTitle'); text('#termsHeading','termsHeading');
+ const reviewNotice=document.querySelector('#contractCard .notice'); if(reviewNotice)reviewNotice.innerHTML='<b>'+esc(tr('beforeSign'))+'</b> '+esc(tr('beforeSignBody'));
+ const guides=document.querySelectorAll('#contractCard .guide div');
+ [['guide1','guide1b'],['guide2','guide2b'],['guide3','guide3b']].forEach((keys,i)=>{if(guides[i])guides[i].innerHTML='<b>'+esc(tr(keys[0]))+'</b><span>'+esc(tr(keys[1]))+'</span>'});
+ text('#signCard .step-kicker','signStep'); text('#signCard h2','signTitle');
+ const reserve=document.querySelector('#signCard .notice'); if(reserve)reserve.innerHTML='<b>'+esc(tr('notReserved'))+'</b> '+esc(tr('notReservedBody'));
+ const labels=document.querySelectorAll('#signCard .consent-row span'); if(labels[0])labels[0].textContent=tr('agree1');if(labels[1])labels[1].textContent=tr('agree2');if(labels[2])labels[2].textContent=tr('agree3');
+ const legal=$('#legalName')?.closest('label');if(legal)legal.childNodes[0].nodeValue=tr('legalName');
+ const canvasLabel=$('#sig')?.previousElementSibling;if(canvasLabel&&canvasLabel.tagName==='LABEL')canvasLabel.innerHTML=esc(tr('draw'))+' <span style="font-weight:400">('+(lang==='es'?'opcional — la aceptación con tu nombre legal se registra de cualquier manera':'optional — legal-name acceptance is recorded either way')+')</span>';
+ text('#clearSig','clear');text('#signBtn','accept');
+ text('#payCard .step-kicker','payStep');text('#payCard h2','payTitle');
+ const payNotice=document.querySelector('#payCard > .notice');if(payNotice)payNotice.innerHTML='<b>'+esc(tr('chooseAmount'))+'</b> '+esc(tr('chooseAmountBody'));
+ const amtTitle=document.querySelector('#payCard .payment-head b');if(amtTitle)amtTitle.textContent=tr('amountLabel');
+ const amtHelp=document.querySelector('#payCard .payment-head .help');if(amtHelp)amtHelp.textContent=tr('amountHelp');
+ text('#depositQuick','reqDeposit');text('#fullQuick','payFull');
+ const refLabel=$('#reference')?.closest('label');if(refLabel){refLabel.childNodes[0].nodeValue=tr('reference')+' ';const sp=refLabel.querySelector('span');if(sp)sp.textContent='('+tr('optional')+')'}
+ if($('#reference'))$('#reference').placeholder=lang==='es'?'Número de confirmación, nota o últimos 4 dígitos':'Confirmation number, note, or last 4 digits';
+ const warning=document.querySelector('#payCard .reserve-warning');if(warning)warning.innerHTML='<b>'+esc(tr('important'))+'</b> '+esc(tr('importantBody'));
+ text('#printCard .step-kicker','copyStep');text('#printCard h2','saveTitle');text('#printContractBtn','print');
+ if(hosted){renderCoreData();showPay();renderPrintCard()}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+ document.getElementById('chooseEs').onclick=()=>{document.getElementById('languageModal').classList.add('hidden');setLang('es')};
+ document.getElementById('chooseEn').onclick=()=>{document.getElementById('languageModal').classList.add('hidden');setLang('en')};
+ document.getElementById('switchEs').onclick=()=>setLang('es');
+ document.getElementById('switchEn').onclick=()=>setLang('en');
+ document.documentElement.lang=lang;
+ if(localStorage.getItem(LANG_KEY))document.getElementById('languageModal').classList.add('hidden');
+});
+
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Number(n||0));
+const token=decodeURIComponent(location.pathname.split('/').filter(Boolean)[1]||'');let hosted=null;
+const canvas=$('#sig'),ctx=canvas.getContext('2d');ctx.lineWidth=3;ctx.lineCap='round';let draw=false,ink=false;
+function pos(e){const r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)*(canvas.width/r.width),y:(p.clientY-r.top)*(canvas.height/r.height)}}
+function start(e){draw=true;let p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()}function move(e){if(!draw)return;let p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();ink=true;e.preventDefault()}function end(e){draw=false;e.preventDefault()}
+['mousedown','touchstart'].forEach(x=>canvas.addEventListener(x,start,{passive:false}));['mousemove','touchmove'].forEach(x=>canvas.addEventListener(x,move,{passive:false}));['mouseup','mouseleave','touchend'].forEach(x=>canvas.addEventListener(x,end,{passive:false}));$('#clearSig').onclick=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);ink=false};
+async function api(path,options={}){const r=await fetch(path,{...options,headers:{'content-type':'application/json',...(options.headers||{})}});const d=await r.json();if(!r.ok)throw Error(d.error||(lang==='es'?'La solicitud falló':'Request failed'));return d}
+
+function localizedTerms(raw){
+ if(lang==='en')return raw||'';
+ let x=String(raw||'');
+ const pairs=[
+ ['TERMS AND CONDITIONS','TÉRMINOS Y CONDICIONES'],['1. EVENT DETAILS AND AUTHORITY','1. DETALLES DEL EVENTO Y AUTORIDAD'],
+ ['The client confirms that the event date, performance time, location, number of musicians, performance duration, pricing, and other details shown in this agreement are correct. The person signing for the client confirms that they are authorized to approve this agreement and bind the client, organization, or venue identified in it.','El cliente confirma que la fecha del evento, la hora de la presentación, la ubicación, el número de músicos, la duración de la presentación, el precio y los demás detalles que aparecen en este acuerdo son correctos. La persona que firma por el cliente confirma que está autorizada para aprobar este acuerdo y obligar al cliente, organización o lugar identificado en el mismo.'],
+ ['2. RESERVATION AND DEPOSIT','2. RESERVACIÓN Y DEPÓSITO'],
+ ['The total compensation for the musical performance is ','La compensación total por la presentación musical es '],['. A deposit of ','. Se requiere un depósito de '],[' is due when this agreement is signed. The performance date and time are not reserved until ',' al firmar este acuerdo. La fecha y hora de la presentación no quedan reservadas hasta que '],[' confirms that the deposit has been received or an approved existing client credit is applied.',' confirme que el depósito fue recibido o que se aplicó un crédito de cliente previamente aprobado.'],
+ ['Until the deposit or approved credit is confirmed, the requested date and time may remain available to other clients, and neither party has a continuing obligation to perform under this agreement.','Hasta que se confirme el depósito o crédito aprobado, la fecha y hora solicitadas pueden permanecer disponibles para otros clientes y ninguna de las partes tiene una obligación continua de cumplir este acuerdo.'],
+ ['3. REMAINING BALANCE AND PAYMENT','3. SALDO RESTANTE Y PAGO'],['Approved prior client credit applied to this agreement is ','El crédito previo aprobado del cliente aplicado a este acuerdo es '],['. After the deposit and any approved credit are applied, the remaining balance is ','. Después de aplicar el depósito y cualquier crédito aprobado, el saldo restante es '],
+ ['The remaining balance is due immediately before the performance begins unless this agreement states an earlier deadline. The client may pay the balance earlier. Payments may be made through an approved method offered by ','El saldo restante vence inmediatamente antes de que comience la presentación, a menos que este acuerdo indique una fecha límite anterior. El cliente puede pagar el saldo antes. Los pagos pueden realizarse mediante un método aprobado ofrecido por '],[' including cash, Zelle, or card. Any applicable card-processing charge must be disclosed before payment is completed.',' incluyendo efectivo, Zelle o tarjeta. Cualquier cargo aplicable por procesamiento de tarjeta debe informarse antes de completar el pago.'],['If the required balance has not been paid by the applicable deadline, ','Si el saldo requerido no se ha pagado antes de la fecha límite aplicable, '],[' may withhold or cancel the performance.',' puede retener o cancelar la presentación.'],
+ ['4. CLIENT CANCELLATION','4. CANCELACIÓN POR PARTE DEL CLIENTE'],['The client may cancel the performance by notifying ','El cliente puede cancelar la presentación notificando a '],['. Unless otherwise stated in writing, a confirmed deposit is non-refundable after the date and time have been reserved. Following a client cancellation, the client is not responsible for the unpaid remaining balance unless another written agreement states otherwise.','. A menos que se indique lo contrario por escrito, un depósito confirmado no es reembolsable después de que la fecha y hora hayan sido reservadas. Después de una cancelación por parte del cliente, el cliente no es responsable del saldo restante no pagado, salvo que otro acuerdo escrito indique lo contrario.'],['A request to change the event date, time, location, duration, or number of musicians is not automatically approved. Any approved material change must be reflected in a revised agreement.','Una solicitud para cambiar la fecha, hora, ubicación, duración o número de músicos del evento no se aprueba automáticamente. Cualquier cambio importante aprobado debe reflejarse en un acuerdo revisado.'],
+ ['5. CONTRACTOR CANCELLATION','5. CANCELACIÓN POR PARTE DEL CONTRATISTA'],[' may cancel before the performance when reasonably necessary. When ',' puede cancelar antes de la presentación cuando sea razonablemente necesario. Cuando '],[' cancels for a reason other than force majeure and no substitute performance is accepted, all payments received for the cancelled performance will be refunded to the client. The client may not recover additional consequential or indirect damages.',' cancela por una razón distinta de fuerza mayor y no se acepta una presentación sustituta, todos los pagos recibidos por la presentación cancelada serán reembolsados al cliente. El cliente no podrá reclamar daños consecuentes o indirectos adicionales.'],
+ ['6. FEWER MUSICIANS THAN AGREED','6. MENOS MÚSICOS DE LOS ACORDADOS'],['If fewer musicians appear than the number stated in this agreement because of an unexpected circumstance, the client will receive a refund of ','Si debido a una circunstancia inesperada se presentan menos músicos que el número indicado en este acuerdo, el cliente recibirá un reembolso de '],[' for each missing musician for each affected performance hour. This adjustment does not apply when the client previously approves a smaller ensemble or when the written agreement is formally revised before the performance.',' por cada músico faltante por cada hora de presentación afectada. Este ajuste no aplica cuando el cliente aprueba previamente un grupo más pequeño o cuando el acuerdo escrito se revisa formalmente antes de la presentación.'],
+ ['7. FORCE MAJEURE CREDIT','7. CRÉDITO POR FUERZA MAYOR'],["Neither party will be responsible for a failure or delay caused by circumstances reasonably beyond that party's control, including severe weather, natural disaster, government action, venue closure, emergency, serious illness, disability, or another comparable unexpected event.",'Ninguna de las partes será responsable por incumplimiento o demora causada por circunstancias razonablemente fuera de su control, incluyendo clima severo, desastre natural, acción gubernamental, cierre del lugar, emergencia, enfermedad grave, incapacidad u otro evento inesperado comparable.'],['If a force-majeure event prevents the performance, no unpaid remaining balance will be due. Payments already received for the cancelled performance will remain as a client credit toward one rescheduled performance of equal or comparable value. ','Si un evento de fuerza mayor impide la presentación, no se deberá ningún saldo restante no pagado. Los pagos ya recibidos por la presentación cancelada permanecerán como crédito del cliente para una presentación reprogramada de valor igual o comparable. '],[" will not treat that credit as forfeited income or keep it without providing the client a fair opportunity to reschedule.",' no tratará ese crédito como ingreso perdido ni lo conservará sin brindar al cliente una oportunidad justa de reprogramar.'],["The parties will cooperate in good faith to select a replacement date, subject to ",'Las partes cooperarán de buena fe para seleccionar una fecha de reemplazo, sujeta a la disponibilidad de '],["'s availability. Any change to the date, time, location, duration, ensemble size, or price must be documented in a revised agreement accepted by both parties.",'. Cualquier cambio en la fecha, hora, ubicación, duración, tamaño del grupo o precio debe documentarse en un acuerdo revisado aceptado por ambas partes.'],['If the replacement performance costs more because the client requests additional musicians, time, travel, or services, the client will pay the difference. If it costs less, the unused credit will remain available or be handled according to the revised written agreement. The credit is not transferable to another client unless ','Si la presentación de reemplazo cuesta más porque el cliente solicita músicos, tiempo, viaje o servicios adicionales, el cliente pagará la diferencia. Si cuesta menos, el crédito no utilizado permanecerá disponible o se manejará conforme al acuerdo escrito revisado. El crédito no puede transferirse a otro cliente a menos que '],[' approves the transfer in writing.',' apruebe la transferencia por escrito.'],
+ ['8. PERFORMANCE BREAKS','8. DESCANSOS DURANTE LA PRESENTACIÓN'],['For performances longer than one hour, ','Para presentaciones de más de una hora, '],[' will normally take one 15-minute break after the first hour and may take an additional break after each following 45-minute performance period. The parties may adjust the timing of breaks based on the event schedule, provided the arrangement remains reasonable for the musicians and the client.',' normalmente tomará un descanso de 15 minutos después de la primera hora y podrá tomar un descanso adicional después de cada período posterior de 45 minutos de presentación. Las partes pueden ajustar el horario de los descansos según el programa del evento, siempre que el arreglo siga siendo razonable para los músicos y el cliente.'],
+ ['9. CHANGES AND COMPLETE AGREEMENT','9. CAMBIOS Y ACUERDO COMPLETO'],['Any material change to this signed agreement must be documented in a revised version and accepted by both parties. Messages, discussions, or verbal requests do not automatically modify the signed terms unless the parties clearly approve the change and include it in the updated agreement.','Cualquier cambio importante a este acuerdo firmado debe documentarse en una versión revisada y ser aceptado por ambas partes. Los mensajes, conversaciones o solicitudes verbales no modifican automáticamente los términos firmados, a menos que las partes aprueben claramente el cambio y lo incluyan en el acuerdo actualizado.'],
+ ['10. ELECTRONIC RECORDS AND SIGNATURES','10. REGISTROS Y FIRMAS ELECTRÓNICAS'],['The parties consent to conducting this transaction electronically and to using electronic records and electronic signatures. Each party should be able to retain, download, and print the completed agreement and related payment records. Each party should keep a copy for its records.','Las partes aceptan realizar esta transacción electrónicamente y utilizar registros y firmas electrónicas. Cada parte debe poder conservar, descargar e imprimir el acuerdo completado y los registros de pago relacionados. Cada parte debe guardar una copia para sus archivos.']
+ ];
+ for(const [a,b] of pairs)x=x.split(a).join(b);
+ return x;
+}
+function renderCoreData(){
+ const p=hosted.contract||{},a=p.agreement||{},b=p.business||{};
+ $('#status').innerHTML=`<b>${esc(hosted.status==='confirmed'?tr('confirmed'):tr('contract')+' '+hosted.contractExternalId)}</b>`;
+ $('#facts').innerHTML=[
+ [tr('client'),p.client?.name],[tr('event'),a.eventType],[tr('date'),a.date],[tr('time'),a.time],[tr('package'),a.packageName||a.duration],[tr('location'),a.location]
+ ].map(([k,v])=>`<div class="fact"><span>${k}</span><b>${esc(v||'—')}</b></div>`).join('');
+ $('#money').innerHTML=`<div><small>${esc(tr('total'))}</small><br><b>${money(a.total)}</b></div><div><small>${esc(tr('reqDeposit'))}</small><br><b>${money(a.deposit)}</b></div><div><small>${esc(tr('remainingAfterDeposit'))}</small><br><b>${money(a.balance)}</b></div>`;
+ $('#terms').textContent=localizedTerms(a.terms||'');
+}
+function render(){
+ renderCoreData();
+ $('#contractCard').classList.remove('hidden');
+ if(!hosted.signedAt)$('#signCard').classList.remove('hidden');else $('#signCard').classList.add('hidden');
+ if(hosted.signedAt)showPay();
+ renderPrintCard();
+ applyLanguage();
+}
+
+function hostedStateLabel(){
+  const a=hosted?.contract?.agreement||{};
+  const total=Number(a.total||0),paid=Number(hosted?.paymentAmount||0);
+  const verified=hosted?.paymentStatus==='verified';
+  const reserved=hosted?.reservationStatus==='reserved'||hosted?.status==='confirmed';
+  const signed=!!hosted?.signedAt||['signed','payment_declared','confirmed'].includes(hosted?.status||'');
+  if(verified && total>0 && paid>=total-0.005)return tr('fullyPaid');
+  if(reserved && verified && paid>0)return tr('reserved')+' — '+money(paid);
+  if(signed && hosted?.paymentStatus==='client_declared_sent')return tr('sentAwaiting');
+  if(signed)return tr('signedPending');
+  return tr('awaitingSig');
+}
+function renderPrintCard(){
+  if(!hosted)return;
+  const card=$('#printCard'); if(!card)return;
+  const signed=!!hosted.signedAt||['signed','payment_declared','confirmed'].includes(hosted.status||'');
+  if(!signed){card.classList.add('hidden');return}
+  card.classList.remove('hidden');
+  const a=hosted.contract?.agreement||{},total=Number(a.total||0),paid=Number(hosted.paymentAmount||0),remaining=Math.max(0,total-paid);
+  const state=hostedStateLabel();
+  let details='<b>'+esc(tr('status'))+'</b> '+esc(state);
+  if(paid>0)details+='<br><b>'+esc(tr('payment'))+'</b> '+money(paid);
+  if(remaining>0&&paid>0)details+='<br><b>'+esc(tr('remaining'))+'</b> '+money(remaining);
+  if(hosted.paymentStatus==='verified')details+='<br><b>'+esc(tr('verification'))+'</b> '+esc(tr('verified'));
+  else if(hosted.paymentStatus==='client_declared_sent')details+='<br><b>'+esc(tr('verification'))+'</b> '+esc(tr('awaitingVerification'));
+  details+='<br><b>'+esc(tr('reservation'))+'</b> '+esc(hosted.reservationStatus==='reserved'?tr('reserved'):tr('notYetReserved'));
+  $('#contractStateSummary').innerHTML=details;
+  $('#printHelp').textContent=tr('currentStatus',{state});
+}
+function printHostedContract(){
+  renderPrintCard();
+  window.print();
+}
+function paymentBounds(){
+ const a=hosted.contract?.agreement||{},total=Math.max(0,Number(a.total||0)),deposit=Math.max(0,Math.min(Number(a.deposit||0),total));
+ return{deposit,total}
+}
+function clampAmount(value){
+ const {deposit,total}=paymentBounds(),n=Number(value);
+ if(!Number.isFinite(n))return deposit;
+ return Math.min(total,Math.max(deposit,Math.round(n*100)/100))
+}
+function selectedPaymentChoice(){
+ const {deposit,total}=paymentBounds(),amount=clampAmount($('#paymentAmount').value);
+ if(Math.abs(amount-deposit)<.005)return{choice:'deposit',amount};
+ if(Math.abs(amount-total)<.005)return{choice:'full',amount};
+ return{choice:'custom',amount}
+}
+function syncPaymentAmount(value){
+ const {deposit,total}=paymentBounds(),amount=clampAmount(value);
+ $('#paymentSlider').min=deposit;$('#paymentSlider').max=total;$('#paymentSlider').step=1;$('#paymentSlider').value=amount;
+ $('#paymentAmount').min=deposit;$('#paymentAmount').max=total;$('#paymentAmount').value=amount.toFixed(2);
+ $('#paymentValue').textContent=money(amount);$('#minLabel').textContent=(lang==='es'?'Requerido ':'Required ')+money(deposit);$('#maxLabel').textContent=(lang==='es'?'Total ':'Full ')+money(total);
+ $('#depositQuick').classList.toggle('active',Math.abs(amount-deposit)<.005);$('#fullQuick').classList.toggle('active',Math.abs(amount-total)<.005);
+ $('#sentBtn').textContent=(lang==='es'?'Envié ':'I sent ')+money(amount)+(lang==='es'?' por Zelle':' through Zelle')
+}
+function showPay(){
+ $('#payCard').classList.remove('hidden');const z=hosted.zelle||{},phone=z.receiptPhone||'',a=hosted.contract?.agreement||{};
+ const current=hosted.paymentAmount||a.deposit||0;syncPaymentAmount(current);
+ $('#zelle').innerHTML=`<div class="zelle-grid"><div class="zelle-instructions"><div class="big-callout"><b>${esc(tr('sendThrough',{amount:$('#paymentValue').textContent}))}</b></div><br>${esc(tr('recipient'))}: <b>${esc(z.name||'Mariachi Hermanos Azteca')}</b><br>${esc(tr('zelleHandle'))}: <b>${esc(z.handle||'Comunícate con el mariachi para recibir las instrucciones de Zelle')}</b>${z.memo?`<br><br>${esc(z.memo)}`:''}</div>${phone?`<div class="screenshot-step"><div class="big-callout"><b>${esc(tr('afterPay'))}</b></div><br>${esc(lang==='es'?'Envía la captura de confirmación de Zelle por texto al':'Text the Zelle confirmation screenshot to')} <b>${esc(phone)}</b> ${esc(lang==='es'?'para que podamos relacionarla con tu contrato.':'so we can match it to your contract.')}<br><a class="btn gold" style="margin-top:10px;display:inline-flex;text-decoration:none" href="sms:${esc(phone.replace(/[^0-9+]/g,''))}">${esc(tr('textScreenshot'))}</a><div class="help" style="margin-top:8px">${esc(tr('evidenceOnly'))}</div></div>`:`<div class="screenshot-step"><b>${esc(lang==='es'?'Después de pagar:':'After you pay:')}</b><br>${esc(lang==='es'?'Toma una captura de la confirmación de Zelle y envíala al número de teléfono del negocio.':'Take a screenshot of the Zelle confirmation and send it back to the business phone number.')}</div>`}</div>`;
+ if(hosted.paymentStatus==='client_declared_sent'){
+   $('#payNotice').innerHTML='<div class="notice good" style="margin-top:12px">✓ You marked the Zelle payment as sent. Please make sure you also texted the screenshot. We will verify the actual payment before the date becomes reserved.</div>';
+   $('#sentBtn').disabled=$('#paymentSlider').disabled=$('#paymentAmount').disabled=$('#depositQuick').disabled=$('#fullQuick').disabled=true
+ }
+ if(hosted.paymentStatus==='verified'){
+   $('#payNotice').innerHTML='<div class="notice good" style="margin-top:12px">✓ Payment verified by Mariachi Hermanos Azteca. Your booking is reserved.</div>';
+   $('#sentBtn').disabled=$('#paymentSlider').disabled=$('#paymentAmount').disabled=$('#depositQuick').disabled=$('#fullQuick').disabled=true
+ }
+}
+$('#signBtn').onclick=async()=>{
+ if(!['agree1','agree2','agree3'].every(id=>$('#'+id).checked))return $('#signNotice').innerHTML='<div class="notice bad">'+esc(lang==='es'?'Acepta las tres declaraciones.':'Please accept all three statements.')+'</div>';
+ const legalName=$('#legalName').value.trim();if(!legalName)return $('#signNotice').innerHTML='<div class="notice bad">'+esc(lang==='es'?'Ingresa tu nombre legal.':'Enter your legal name.')+'</div>';
+ const b=$('#signBtn');b.disabled=true;b.textContent=lang==='es'?'Firmando…':'Signing…';
+ try{const d=await api('/api/hosted-contracts/token/'+encodeURIComponent(token)+'/sign',{method:'POST',body:JSON.stringify({accepted:true,legalName,signatureDataUrl:ink?canvas.toDataURL('image/png'):'',statements:['details-price-deposit','terms-payment','deposit-verification']})});hosted=d.hosted;$('#signNotice').innerHTML='<div class="notice good">'+esc(lang==='es'?'✓ Contrato firmado correctamente.':'✓ Contract signed successfully.')+'</div>';render()}
+ catch(e){$('#signNotice').innerHTML='<div class="notice bad">'+esc(e.message)+'</div>'}
+ finally{b.disabled=false;b.textContent=tr('accept')}
+};
+async function declareSelected(){
+ const btn=$('#sentBtn'),selection=selectedPaymentChoice();btn.disabled=true;const original=btn.textContent;btn.textContent=lang==='es'?'Guardando…':'Saving…';
+ try{const d=await api('/api/hosted-contracts/token/'+encodeURIComponent(token)+'/declare-zelle',{method:'POST',body:JSON.stringify({choice:selection.choice,amount:selection.amount,reference:$('#reference').value.trim()})});hosted=d.hosted;showPay();renderPrintCard()}
+ catch(e){$('#payNotice').innerHTML='<div class="notice bad">'+esc(e.message)+'</div>'}
+ finally{if(hosted?.paymentStatus!=='client_declared_sent'){btn.disabled=false;btn.textContent=original}}
+}
+function refreshZelleAmount(){
+ const z=hosted.zelle||{},phone=z.receiptPhone||'',selection=selectedPaymentChoice();
+ $('#sentBtn').textContent='I sent '+money(selection.amount)+' through Zelle';
+ const box=document.querySelector('.zelle-instructions .big-callout b');if(box)box.textContent=tr('sendThrough',{amount:money(selection.amount)})
+}
+$('#paymentSlider').addEventListener('input',e=>{syncPaymentAmount(e.target.value);refreshZelleAmount()});
+$('#paymentAmount').addEventListener('change',e=>{syncPaymentAmount(e.target.value);refreshZelleAmount()});
+$('#depositQuick').onclick=()=>{syncPaymentAmount(paymentBounds().deposit);refreshZelleAmount()};
+$('#fullQuick').onclick=()=>{syncPaymentAmount(paymentBounds().total);refreshZelleAmount()};
+$('#sentBtn').onclick=declareSelected;
+$('#printContractBtn').onclick=printHostedContract;
+(async()=>{try{const d=await api('/api/hosted-contracts/token/'+encodeURIComponent(token));hosted=d.hosted;render()}catch(e){$('#status').innerHTML='<div class="notice bad">'+esc(e.message)+'</div>'}})();
+</script></body></html>
